@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 using UnityEngine.InputSystem;
 
@@ -6,19 +7,23 @@ public class CameraManager : MonoBehaviour
 {
     public GameObject[] securityCameras;
     public GameObject playerCamera;
+    public GameObject monitorCanvasPanel;
+    public GameObject screenImage;
+
+    private bool isMonitorOpen = false;
 
     void Start() {
         ShowPlayerView();
+        monitorCanvasPanel.SetActive(false);
+        screenImage.SetActive(false);
     }
 
     void Update() {
         //Test
-        var keyboard = Keyboard.current;
 
-        if (keyboard.digit1Key.wasPressedThisFrame) SwitchToCamera(0);
-        if (keyboard.digit2Key.wasPressedThisFrame) SwitchToCamera(1);
-        if (keyboard.digit3Key.wasPressedThisFrame) SwitchToCamera(2);
-        if (keyboard.spaceKey.wasPressedThisFrame) ShowPlayerView();
+        if (Keyboard.current.spaceKey.wasPressedThisFrame) {
+            ToggleMonitor();
+        }
     }
 
     public void ShowPlayerView() {
@@ -36,5 +41,22 @@ public class CameraManager : MonoBehaviour
             cam.SetActive(false);
         }
         securityCameras[index].SetActive(true);
+    }
+
+    public void ToggleMonitor() {
+        isMonitorOpen = !isMonitorOpen;
+
+        monitorCanvasPanel.SetActive(isMonitorOpen);
+        screenImage.SetActive(isMonitorOpen);
+
+        if (isMonitorOpen) {
+            SwitchToCamera(0); 
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        } else {
+            ShowPlayerView();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 }
