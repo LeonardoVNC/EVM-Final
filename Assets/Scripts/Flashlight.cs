@@ -12,7 +12,6 @@ public class Flashlight : MonoBehaviour {
     public void Toggle() {
         isOn = !isOn;
         lightComponent.enabled = isOn;
-        Debug.Log("Ayu" + isOn);
     }
 
     public void ForceOff() {

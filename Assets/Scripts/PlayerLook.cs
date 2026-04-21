@@ -5,7 +5,7 @@ public class PlayerLook : MonoBehaviour {
     public Transform playerCamera;
 
     private float xRotation = 0f;
-    private float mouseSensibility = 15f;
+    private float mouseSensibility = 25f;
     private Vector2 mouseInput;
     private bool isActive = true;
 

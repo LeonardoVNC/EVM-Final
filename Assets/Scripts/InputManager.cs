@@ -27,9 +27,7 @@ public class InputManager : MonoBehaviour {
     }
     
     public void OnAttack() {
-        Debug.Log("A");
         if (!isMonitorOpen && flashlight != null) {
-            Debug.Log("Ay");
             flashlight.Toggle();
         }
     }
