@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 public class CameraManager : MonoBehaviour
 {
     private List<SecurityCamera> securityCameras = new List<SecurityCamera>();
     public Camera playerCamera;
+    public PlayerLook playerLookScript;
     public GameObject monitorCanvasPanel;
     public GameObject screenImage;
 
@@ -25,11 +25,6 @@ public class CameraManager : MonoBehaviour
         ShowPlayerView();
         monitorCanvasPanel.SetActive(false);
         screenImage.SetActive(false);
-    }
-
-    public void OnTooglePanel(){
-        Debug.Log("Ayuda");
-        ToggleMonitor();
     }
 
     public void ShowPlayerView() {
