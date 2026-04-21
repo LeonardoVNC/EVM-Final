@@ -27,10 +27,9 @@ public class CameraManager : MonoBehaviour
         screenImage.SetActive(false);
     }
 
-    void Update() {
-        if (Keyboard.current.spaceKey.wasPressedThisFrame) {
-            ToggleMonitor();
-        }
+    public void OnTooglePanel(){
+        Debug.Log("Ayuda");
+        ToggleMonitor();
     }
 
     public void ShowPlayerView() {
