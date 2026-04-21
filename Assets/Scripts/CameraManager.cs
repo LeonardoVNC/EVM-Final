@@ -1,16 +1,25 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class CameraManager : MonoBehaviour
 {
-    public GameObject[] securityCameras;
-    public GameObject playerCamera;
+    private List<SecurityCamera> securityCameras = new List<SecurityCamera>();
+    public Camera playerCamera;
     public GameObject monitorCanvasPanel;
     public GameObject screenImage;
 
     private bool isMonitorOpen = false;
+
+    void Awake() {
+        foreach (Transform child in transform) {
+            SecurityCamera sCam = child.GetComponent<SecurityCamera>();
+            if (sCam != null) {
+                securityCameras.Add(sCam);
+            }
+        }
+    }
 
     void Start() {
         ShowPlayerView();
@@ -19,28 +28,25 @@ public class CameraManager : MonoBehaviour
     }
 
     void Update() {
-        //Test
-
         if (Keyboard.current.spaceKey.wasPressedThisFrame) {
             ToggleMonitor();
         }
     }
 
     public void ShowPlayerView() {
-        foreach (GameObject cam in securityCameras) {
-            cam.SetActive(false);
+        foreach (var cam in securityCameras) {
+            cam.SetState(false);
         }
-        playerCamera.SetActive(true);
+        playerCamera.enabled = true;
     }
 
     public void SwitchToCamera(int index) {
-        if (index < 0 || index >= securityCameras.Length) return;
+        if (index < 0 || index >= securityCameras.Count) return;
 
-        playerCamera.SetActive(false);
-        foreach (GameObject cam in securityCameras) {
-            cam.SetActive(false);
+        playerCamera.enabled = false;
+        for (int i = 0; i < securityCameras.Count; i++) {
+            securityCameras[i].SetState(i == index);
         }
-        securityCameras[index].SetActive(true);
     }
 
     public void ToggleMonitor() {
@@ -52,11 +58,10 @@ public class CameraManager : MonoBehaviour
         if (isMonitorOpen) {
             SwitchToCamera(0); 
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
         } else {
             ShowPlayerView();
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
+        Cursor.visible = isMonitorOpen;
     }
 }
