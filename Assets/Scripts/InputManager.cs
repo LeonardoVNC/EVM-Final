@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour {
     public PlayerLook playerLook;
     public CameraManager cameraManager;
+    public Flashlight flashlight;
 
     private bool isMonitorOpen = false;
 
@@ -19,6 +20,17 @@ public class InputManager : MonoBehaviour {
         if (cameraManager != null) {
             cameraManager.ToggleMonitor();
             isMonitorOpen = !isMonitorOpen;
+            if (isMonitorOpen && flashlight != null) {
+                flashlight.ForceOff();
+            }
+        }
+    }
+    
+    public void OnAttack() {
+        Debug.Log("A");
+        if (!isMonitorOpen && flashlight != null) {
+            Debug.Log("Ay");
+            flashlight.Toggle();
         }
     }
 }
