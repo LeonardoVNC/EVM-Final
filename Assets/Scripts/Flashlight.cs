@@ -10,16 +10,12 @@ public class Flashlight : MonoBehaviour {
     }
 
     public void Toggle() {
-        if (!GameManager.Instance.hasPower) return;
-
         isOn = !isOn;
         lightComponent.enabled = isOn;
-        GameManager.Instance.SetFlashlightStatus(isOn);
     }
 
     public void ForceOff() {
         isOn = false;
         lightComponent.enabled = false;
-        GameManager.Instance.SetFlashlightStatus(false);
     }
 }
