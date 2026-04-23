@@ -18,12 +18,15 @@ public class InputManager : MonoBehaviour {
 
     public void OnTooglePanel() {
         if (cameraManager != null) {
-            cameraManager.ToggleMonitor();
-            isMonitorOpen = !isMonitorOpen;
-            if (isMonitorOpen && flashlight != null) {
-                flashlight.ForceOff();
-            }
+        cameraManager.ToggleMonitor();
+        isMonitorOpen = !isMonitorOpen;
+        GameManager.Instance.SetPanelStatus(isMonitorOpen);
+
+        if (isMonitorOpen && flashlight != null) {
+            flashlight.ForceOff();
+            GameManager.Instance.SetFlashlightStatus(false);
         }
+    }
     }
     
     public void OnAttack() {
