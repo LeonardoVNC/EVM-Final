@@ -5,8 +5,9 @@ using TMPro;
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
 
-    public TextMeshProUGUI batteryText; 
-    public Image consumptionImage;
+    public TextMeshProUGUI batteryText;
+    public Image consumptionDisplay;
+    public Sprite[] consumptionSprites;
 
     public float batteryLevel = 100f;
     public float baseDrain = 0.1f;
@@ -52,14 +53,10 @@ public class GameManager : MonoBehaviour {
             batteryText.text = "Batería: " + Mathf.CeilToInt(batteryLevel) + "%";
         }
 
-        if (consumptionImage != null) {
-            float usageLevel = (isSecPanelOn ? 2 : 0) + (isFlashlightOn ? 1 : 0) +  (isDoor1Closed ? 1 : 0) + (isDoor2Closed ? 1 : 0) + 1;
-
-            consumptionImage.fillAmount = usageLevel / 6f;
-
-            if (usageLevel <= 2) consumptionImage.color = Color.green;
-            else if (usageLevel <= 4) consumptionImage.color = Color.yellow;
-            else consumptionImage.color = Color.red;
+        if (consumptionDisplay != null && consumptionSprites.Length > 0) {
+            float usageLevel = (isSecPanelOn ? 2 : 0) + (isFlashlightOn ? 1 : 0) + (isDoor1Closed ? 1 : 0) + (isDoor2Closed ? 1 : 0);
+            int spriteIndex = Mathf.Clamp((int)usageLevel, 0, consumptionSprites.Length - 1);
+            consumptionDisplay.sprite = consumptionSprites[spriteIndex];
         }
     }
 
