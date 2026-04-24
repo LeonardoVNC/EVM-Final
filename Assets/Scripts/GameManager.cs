@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour {
 
         float currentDrain = baseDrain + (consumptionUnits * unitDrain);
         batteryLevel -= currentDrain * Time.deltaTime;
-
         if (batteryLevel <= 0) {
             batteryLevel = 0;
             PowerOut();

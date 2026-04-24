@@ -20,8 +20,12 @@ public class InputManager : MonoBehaviour {
         if (cameraManager != null) {
             cameraManager.ToggleMonitor();
             isMonitorOpen = !isMonitorOpen;
+
+            GameManager.Instance.SetPanelStatus(isMonitorOpen);
+
             if (isMonitorOpen && flashlight != null) {
                 flashlight.ForceOff();
+                GameManager.Instance.SetFlashlightStatus(false);
             }
         }
     }
