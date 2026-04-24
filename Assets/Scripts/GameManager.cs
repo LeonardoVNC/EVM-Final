@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour {
         if (hasPower) {
             CalculateBattery();
             UpdateUI();
+            UpdateAtmosphere();
         }
     }
 
@@ -60,9 +61,24 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    void UpdateAtmosphere() {
+        if (FogManager.Instance == null) return;
+
+        if (isSecPanelOn) {
+            FogManager.Instance.ChangeState(FogManager.FogState.Camera);
+        } 
+        else if (isFlashlightOn) {
+            FogManager.Instance.ChangeState(FogManager.FogState.Flashlight);
+        } 
+        else {
+            FogManager.Instance.ChangeState(FogManager.FogState.Default);
+        }
+    }
+
     void PowerOut() {
         hasPower = false;
         if (batteryText != null) batteryText.text = "Batería: 0%";
+        FogManager.Instance.ChangeState(FogManager.FogState.PowerOut);
         GoToGameOverScreen();
     }
 
