@@ -9,16 +9,17 @@ public class GameManager : MonoBehaviour {
     public TextMeshProUGUI batteryText;
     public Image consumptionDisplay;
     public Sprite[] consumptionSprites;
+    public Image flashlightIcon;
 
     public float batteryLevel = 100f;
-    public float baseDrain = 0.1f;
-    public float unitDrain = 0.25f;
+    private float baseDrain = 0.1f;
+    private float unitDrain = 0.25f;
     public bool hasPower = true;
 
-    public bool isSecPanelOn = false;
-    public bool isFlashlightOn = false;
-    public bool isDoor1Closed = false;
-    public bool isDoor2Closed = false;
+    private bool isSecPanelOn = false;
+    private bool isFlashlightOn = false;
+    private bool isDoor1Closed = false;
+    private bool isDoor2Closed = false;
 
     void Awake() {
         if (Instance == null) Instance = this;
@@ -83,7 +84,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SetPanelStatus(bool status) => isSecPanelOn = status;
-    public void SetFlashlightStatus(bool status) => isFlashlightOn = status;
+    public void SetFlashlightStatus(bool status) {
+        isFlashlightOn = status;
+        flashlightIcon.gameObject.SetActive(status);
+    }
 
     public void GoToWinScreen() {
         SceneManager.LoadScene("WinScreen");
