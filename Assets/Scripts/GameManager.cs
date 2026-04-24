@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour {
@@ -62,9 +63,17 @@ public class GameManager : MonoBehaviour {
     void PowerOut() {
         hasPower = false;
         if (batteryText != null) batteryText.text = "Batería: 0%";
-        Debug.Log("Todo termino amigos");
+        GoToGameOverScreen();
     }
 
     public void SetPanelStatus(bool status) => isSecPanelOn = status;
     public void SetFlashlightStatus(bool status) => isFlashlightOn = status;
+
+    public void GoToWinScreen() {
+        SceneManager.LoadScene("WinScreen");
+    }
+
+    public void GoToGameOverScreen() {
+        SceneManager.LoadScene("GameOverScreen");
+    }
 }
