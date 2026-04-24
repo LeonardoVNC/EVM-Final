@@ -73,5 +73,7 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
+# Ignorar fuentes generadas y sus metadatos
+Assets/Fonts/*.asset
+Assets/Fonts/*.asset.meta
 # End of https://www.toptal.com/developers/gitignore/api/unity
