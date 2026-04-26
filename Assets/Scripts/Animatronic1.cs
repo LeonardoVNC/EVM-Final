@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Animatronic1 : AnimatronicAI
 {
@@ -7,9 +9,20 @@ public class Animatronic1 : AnimatronicAI
     public GameTimeManager gameTimeManager;
     public AudioSource footstepAudio;
 
+    public DoorController doorControllerLeft;
+    public DoorController doorControllerRight;
+
+    public string gameOverSceneName = "GameOverScreen";
+    public float waitAtDoorTime = 6f;
+    public float attackTimer = 3f;
+
     private int currentWaypoint = 0;
     private bool activated = false;
     private bool reachedDoor = false;
+    private bool waitingAtDoor = false;
+    private bool attacking = false;
+    private float doorTimer = 0f;
+    private float attackCountdown = 0f;
     private Animator animator;
 
     protected override void Awake()
@@ -30,17 +43,49 @@ public class Animatronic1 : AnimatronicAI
             }
         }
 
-        // Esto debe estar ANTES del return para que siempre se actualice
         if (animator != null)
             animator.SetBool("isWalking", isActive && !reachedDoor);
 
-        if (!isActive || reachedDoor) return;
+        if (!isActive) return;
+
+        if (waitingAtDoor)
+        {
+            doorTimer += Time.deltaTime;
+
+           
+            if (IsBlockedByDoor())
+            {
+                Debug.Log("A1 bloqueado por puerta, retrocediendo");
+                waitingAtDoor = false;
+                reachedDoor = false;
+                SendBack();
+                return;
+            }
+            attackCountdown -= Time.deltaTime;
+            Debug.Log("A1 esperando, countdown: " + attackCountdown);
+
+            if (attackCountdown <= 0f && !attacking)
+            {
+                attacking = true;
+                StartCoroutine(AttackSequence());
+            }
+            return;
+        }
+
+        if (reachedDoor) return;
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
             GoToNextWaypoint();
 
         if (footstepAudio != null && !footstepAudio.isPlaying)
             footstepAudio.Play();
+    }
+
+    bool IsBlockedByDoor()
+    {
+        if (doorControllerLeft != null && doorControllerLeft.IsClosed()) return true;
+        if (doorControllerRight != null && doorControllerRight.IsClosed()) return true;
+        return false;
     }
 
     void GoToNextWaypoint()
@@ -62,12 +107,37 @@ public class Animatronic1 : AnimatronicAI
     void OnReachedDoor()
     {
         Debug.Log("A1 llegó a la puerta!");
+        Debug.Log("Izq cerrada: " + (doorControllerLeft != null ? doorControllerLeft.IsClosed().ToString() : "NULL"));
+        Debug.Log("Der cerrada: " + (doorControllerRight != null ? doorControllerRight.IsClosed().ToString() : "NULL"));
+
+        waitingAtDoor = true;
+        doorTimer = 0f;
+        attackCountdown = attackTimer;
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            Vector3 direction = player.transform.position - transform.position;
+            direction.y = 0f;
+            transform.rotation = Quaternion.LookRotation(-direction);
+        }
+    }
+
+    IEnumerator AttackSequence()
+    {
+        Debug.Log("JUMPSCARE!");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(gameOverSceneName);
     }
 
     public void SendBack()
     {
         reachedDoor = false;
+        waitingAtDoor = false;
+        attacking = false;
         currentWaypoint = 0;
+        doorTimer = 0f;
+        attackCountdown = 0f;
         agent.SetDestination(waypoints[0].position);
     }
 }

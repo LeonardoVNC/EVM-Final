@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 70605355}
   - component: {fileID: 70605354}
   - component: {fileID: 70605358}
+  - component: {fileID: 70605359}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -236,6 +237,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9e080d3bff19d4190ec1bb480d2fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WinScreen
+--- !u!114 &70605359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70605353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176738509f0fe4c4b9807615b53963b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenu
 --- !u!1 &114714235
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,9 +668,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 70605358}
-        m_TargetAssemblyTypeName: WinScreen, Assembly-CSharp
-        m_MethodName: Reiniciar
+      - m_Target: {fileID: 70605359}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: reintentar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
