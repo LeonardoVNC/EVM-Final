@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using System.Collections.Generic;
 
 public class CameraManager : MonoBehaviour
@@ -9,6 +10,10 @@ public class CameraManager : MonoBehaviour
     public PlayerLook playerLookScript;
     public GameObject monitorCanvasPanel;
     public GameObject screenImage;
+
+    public RawImage staticRawImage;
+    public VideoPlayer staticVideoPlayer;
+    public AudioSource staticAudio;
 
     private bool isMonitorOpen = false;
 
@@ -25,6 +30,19 @@ public class CameraManager : MonoBehaviour
         ShowPlayerView();
         monitorCanvasPanel.SetActive(false);
         screenImage.SetActive(false);
+        
+        if (staticRawImage != null) staticRawImage.gameObject.SetActive(false);
+        if (staticVideoPlayer != null) {
+            staticVideoPlayer.Prepare(); 
+        }
+    }
+
+    void Update() {
+        if (isMonitorOpen && staticVideoPlayer != null && staticVideoPlayer.isPlaying) {
+            if (staticRawImage != null) {
+                staticRawImage.texture = staticVideoPlayer.texture;
+            }
+        }
     }
 
     public void ShowPlayerView() {
@@ -36,6 +54,9 @@ public class CameraManager : MonoBehaviour
 
     public void SwitchToCamera(int index) {
         if (index < 0 || index >= securityCameras.Count) return;
+
+        RestartStaticEffects();
+        StartCoroutine(CameraFlashEffect());
 
         playerCamera.enabled = false;
         for (int i = 0; i < securityCameras.Count; i++) {
@@ -52,10 +73,36 @@ public class CameraManager : MonoBehaviour
         if (isMonitorOpen) {
             SwitchToCamera(0); 
             Cursor.lockState = CursorLockMode.None;
+            if (staticAudio != null) staticAudio.Play();
+            if (staticVideoPlayer != null) staticVideoPlayer.Play();
         } else {
             ShowPlayerView();
             Cursor.lockState = CursorLockMode.Locked;
+            if (staticAudio != null) staticAudio.Stop();
+            if (staticVideoPlayer != null) staticVideoPlayer.Stop();
         }
+
+        if (staticRawImage != null) {
+            staticRawImage.gameObject.SetActive(isMonitorOpen);
+        }
+
         Cursor.visible = isMonitorOpen;
     }
+
+    private void RestartStaticEffects() {
+        if (staticVideoPlayer != null && staticVideoPlayer.isPlaying) {
+            staticVideoPlayer.time = 0;
+        }
+        if (staticAudio != null && staticAudio.isPlaying) {
+            staticAudio.time = 0;
+        }
+    }
+
+    private System.Collections.IEnumerator CameraFlashEffect() {
+        if (staticRawImage != null) {
+            staticRawImage.color = new Color(1, 1, 1, 1);
+            yield return new WaitForSeconds(0.1f);
+            staticRawImage.color = new Color(1, 1, 1, 0.2f);
+        }
+    }   
 }
