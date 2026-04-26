@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using System.Collections.Generic;
@@ -10,99 +10,117 @@ public class CameraManager : MonoBehaviour
     public PlayerLook playerLookScript;
     public GameObject monitorCanvasPanel;
     public GameObject screenImage;
-
     public RawImage staticRawImage;
     public VideoPlayer staticVideoPlayer;
     public AudioSource staticAudio;
-
     private bool isMonitorOpen = false;
 
-    void Awake() {
-        foreach (Transform child in transform) {
+    void Awake()
+    {
+        foreach (Transform child in transform)
+        {
             SecurityCamera sCam = child.GetComponent<SecurityCamera>();
-            if (sCam != null) {
+            if (sCam != null)
+            {
                 securityCameras.Add(sCam);
             }
         }
     }
 
-    void Start() {
+    void Start()
+    {
         ShowPlayerView();
         monitorCanvasPanel.SetActive(false);
         screenImage.SetActive(false);
-        
-        if (staticRawImage != null) staticRawImage.gameObject.SetActive(false);
-        if (staticVideoPlayer != null) {
-            staticVideoPlayer.Prepare(); 
+        if (staticRawImage != null)
+        {
+            staticRawImage.gameObject.SetActive(false);
+            staticRawImage.raycastTarget = false;
+        }
+        if (staticVideoPlayer != null)
+        {
+            staticVideoPlayer.Prepare();
         }
     }
 
-    void Update() {
-        if (isMonitorOpen && staticVideoPlayer != null && staticVideoPlayer.isPlaying) {
-            if (staticRawImage != null) {
+    void Update()
+    {
+        if (isMonitorOpen && staticVideoPlayer != null && staticVideoPlayer.isPlaying)
+        {
+            if (staticRawImage != null)
+            {
                 staticRawImage.texture = staticVideoPlayer.texture;
             }
         }
     }
 
-    public void ShowPlayerView() {
-        foreach (var cam in securityCameras) {
+    public void ShowPlayerView()
+    {
+        foreach (var cam in securityCameras)
+        {
             cam.SetState(false);
         }
         playerCamera.enabled = true;
     }
 
-    public void SwitchToCamera(int index) {
+    public void SwitchToCamera(int index)
+    {
         if (index < 0 || index >= securityCameras.Count) return;
-
         RestartStaticEffects();
         StartCoroutine(CameraFlashEffect());
-
         playerCamera.enabled = false;
-        for (int i = 0; i < securityCameras.Count; i++) {
+        for (int i = 0; i < securityCameras.Count; i++)
+        {
             securityCameras[i].SetState(i == index);
         }
     }
 
-    public void ToggleMonitor() {
+    public void ToggleMonitor()
+    {
         isMonitorOpen = !isMonitorOpen;
-
         monitorCanvasPanel.SetActive(isMonitorOpen);
         screenImage.SetActive(isMonitorOpen);
-
-        if (isMonitorOpen) {
-            SwitchToCamera(0); 
+        if (isMonitorOpen)
+        {
+            SwitchToCamera(0);
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             if (staticAudio != null) staticAudio.Play();
             if (staticVideoPlayer != null) staticVideoPlayer.Play();
-        } else {
+        }
+        else
+        {
             ShowPlayerView();
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             if (staticAudio != null) staticAudio.Stop();
             if (staticVideoPlayer != null) staticVideoPlayer.Stop();
         }
-
-        if (staticRawImage != null) {
+        if (staticRawImage != null)
+        {
             staticRawImage.gameObject.SetActive(isMonitorOpen);
         }
-
-        Cursor.visible = isMonitorOpen;
     }
 
-    private void RestartStaticEffects() {
-        if (staticVideoPlayer != null && staticVideoPlayer.isPlaying) {
+    private void RestartStaticEffects()
+    {
+        if (staticVideoPlayer != null && staticVideoPlayer.isPlaying)
+        {
             staticVideoPlayer.time = 0;
         }
-        if (staticAudio != null && staticAudio.isPlaying) {
+        if (staticAudio != null && staticAudio.isPlaying)
+        {
             staticAudio.time = 0;
         }
     }
 
-    private System.Collections.IEnumerator CameraFlashEffect() {
-        if (staticRawImage != null) {
+    private System.Collections.IEnumerator CameraFlashEffect()
+    {
+        if (staticRawImage != null)
+        {
             staticRawImage.color = new Color(1, 1, 1, 1);
             yield return new WaitForSeconds(0.1f);
             staticRawImage.color = new Color(1, 1, 1, 0.2f);
         }
-    }   
+    }
 }
