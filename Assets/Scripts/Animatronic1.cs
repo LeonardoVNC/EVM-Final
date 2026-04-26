@@ -127,7 +127,7 @@ public class Animatronic1 : AnimatronicAI
     {
         Debug.Log("JUMPSCARE!");
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene(gameOverSceneName);
+        GameManager.Instance.GoToGameOverScreen();
     }
 
     public void SendBack()

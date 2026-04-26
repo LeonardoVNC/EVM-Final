@@ -4122,52 +4122,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2163943892453901235, guid: 3d9f2ae1439844941bb71d9ed7bf24d9, type: 3}
   m_PrefabInstance: {fileID: 629321678}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &645235112
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 645235114}
-  - component: {fileID: 645235113}
-  m_Layer: 0
-  m_Name: GameTimeUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &645235113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645235112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 624d31b037a88d94cb6d8619fe9bc4e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameTimeUI
-  gameTimeManager: {fileID: 866794012}
-  timeText: {fileID: 647238950}
---- !u!4 &645235114
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 645235112}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.46763, y: 22.936, z: -64.86639}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &647238949
 GameObject:
   m_ObjectHideFlags: 0
@@ -8796,8 +8750,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
   playerCamera: {fileID: 330585545}
   playerLookScript: {fileID: 1017839707}
-  monitorCanvasPanel: {fileID: 2078038729}
-  screenImage: {fileID: 1790021242}
   staticRawImage: {fileID: 295663498}
   staticVideoPlayer: {fileID: 2099093195}
   staticAudio: {fileID: 1458169587}
@@ -12423,6 +12375,7 @@ GameObject:
   - component: {fileID: 1952072007}
   - component: {fileID: 1952072006}
   - component: {fileID: 1952072005}
+  - component: {fileID: 1952072009}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -12514,6 +12467,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1952072009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952072004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae3e4e139430c3d4098fa898556d067f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  batteryText: {fileID: 1887872311}
+  consumptionDisplay: {fileID: 840777240}
+  flashlightIcon: {fileID: 71678838}
+  timeText: {fileID: 647238950}
+  securityUI: {fileID: 1032100878}
+  gameUI: {fileID: 1971572054}
 --- !u!1 &1955911320
 GameObject:
   m_ObjectHideFlags: 0
@@ -12867,14 +12838,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1be3610b5eb1094397f70badf4fcc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  batteryText: {fileID: 1887872311}
-  consumptionDisplay: {fileID: 840777240}
   consumptionSprites:
   - {fileID: 21300000, guid: b3c7e3c92bc5f26409cbdaa1a678b514, type: 3}
   - {fileID: 21300000, guid: 3f7424cf1f09a8c42881669bad7364b2, type: 3}
   - {fileID: 21300000, guid: b0f7574fea459d644a6ffb06bcbec7e1, type: 3}
   - {fileID: 21300000, guid: 6811f341e206aa04f87f417c6aa298b0, type: 3}
-  flashlightIcon: {fileID: 71678840}
   batteryLevel: 100
   hasPower: 1
   isDoor1Closed: 0
@@ -13836,7 +13804,6 @@ SceneRoots:
   - {fileID: 518930625}
   - {fileID: 1581230464}
   - {fileID: 866794013}
-  - {fileID: 645235114}
   - {fileID: 1955911322}
   - {fileID: 1878620140}
   - {fileID: 2099093196}
