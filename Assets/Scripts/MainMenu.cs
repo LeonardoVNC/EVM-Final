@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
     private bool isStarting = false;
+    public AudioClip clickClip;
 
     void Start() {
         Cursor.lockState = CursorLockMode.None;
@@ -13,12 +14,12 @@ public class MainMenu : MonoBehaviour {
         if (isStarting) return;
 
         isStarting = true;
-        GlobalAudioManager.Instance.PlayClickSound();
+        GlobalAudioManager.Instance.PlayGlobalSound(clickClip);
         SceneManager.LoadScene("SampleScene");
     }
 
     public void quit() {
-        GlobalAudioManager.Instance.PlayClickSound();
+        GlobalAudioManager.Instance.PlayGlobalSound(clickClip);
         Application.Quit();
     }
 }

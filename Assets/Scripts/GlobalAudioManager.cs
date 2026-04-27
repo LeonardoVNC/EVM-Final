@@ -14,9 +14,9 @@ public class GlobalAudioManager : MonoBehaviour {
         }
     }
 
-    public void PlayClickSound() {
-        if (audioSource != null) {
-            audioSource.Play();
+    public void PlayGlobalSound(AudioClip clip, float volume = 1f) {
+        if (audioSource != null && clip != null) {
+            audioSource.PlayOneShot(clip, volume);
         }
     }
 }

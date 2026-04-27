@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class WinScreen : MonoBehaviour {
     private bool isClicked = false;
+    public AudioClip clickClip;
 
     void Start() {
         Cursor.lockState = CursorLockMode.None;
@@ -13,7 +14,7 @@ public class WinScreen : MonoBehaviour {
         if (isClicked) return;
 
         isClicked = true;
-        GlobalAudioManager.Instance.PlayClickSound();
+        GlobalAudioManager.Instance.PlayGlobalSound(clickClip);
         SceneManager.LoadScene("MainMenu");
     }
 }

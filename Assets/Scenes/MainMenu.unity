@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176738509f0fe4c4b9807615b53963b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
+  clickClip: {fileID: 8300000, guid: bddb633b83bfde940b58429ef348ec4c, type: 3}
 --- !u!1 &673965953
 GameObject:
   m_ObjectHideFlags: 0
