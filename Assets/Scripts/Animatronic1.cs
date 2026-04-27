@@ -96,8 +96,12 @@ public class Animatronic1 : AnimatronicAI
 
         if (currentWaypoint == waypoints.Length - 1)
         {
-            reachedDoor = true;
-            OnReachedDoor();
+           
+            if (agent.remainingDistance < 0.3f)
+            {
+                reachedDoor = true;
+                OnReachedDoor();
+            }
             return;
         }
 
@@ -107,19 +111,21 @@ public class Animatronic1 : AnimatronicAI
     void OnReachedDoor()
     {
         Debug.Log("A1 llegó a la puerta!");
-        Debug.Log("Izq cerrada: " + (doorControllerLeft != null ? doorControllerLeft.IsClosed().ToString() : "NULL"));
-        Debug.Log("Der cerrada: " + (doorControllerRight != null ? doorControllerRight.IsClosed().ToString() : "NULL"));
-
         waitingAtDoor = true;
         doorTimer = 0f;
         attackCountdown = attackTimer;
+
+        
+        agent.ResetPath();
+        agent.velocity = Vector3.zero;
+        agent.updateRotation = false;
 
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
             Vector3 direction = player.transform.position - transform.position;
             direction.y = 0f;
-            transform.rotation = Quaternion.LookRotation(-direction);
+            transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 
@@ -132,6 +138,8 @@ public class Animatronic1 : AnimatronicAI
 
     public void SendBack()
     {
+        StopAllCoroutines(); 
+        agent.updateRotation = true;
         reachedDoor = false;
         waitingAtDoor = false;
         attacking = false;

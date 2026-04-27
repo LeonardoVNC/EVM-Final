@@ -610,7 +610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 12.5
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -618,7 +618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 53.82
+      value: 42.4
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1128,7 +1128,7 @@ MonoBehaviour:
   doorControllerRight: {fileID: 1878620139}
   gameOverSceneName: GameOverScreen
   waitAtDoorTime: 6
-  attackTimer: 3
+  attackTimer: 2
 --- !u!195 &210308564
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -8509,7 +8509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.93
+      value: -44.88
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8517,7 +8517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30.12
+      value: 39.1
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10121,15 +10121,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.68
+      value: -5.47
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.44
+      value: 0.82
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 67.58
+      value: 70.7
       objectReference: {fileID: 0}
     - target: {fileID: 2953861237495370028, guid: 0cad0c6fd2ca594448af64e00ae537bf, type: 3}
       propertyPath: m_LocalRotation.w
