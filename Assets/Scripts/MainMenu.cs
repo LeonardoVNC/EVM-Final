@@ -1,21 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
-{
-    public void play()
-    {
+public class MainMenu : MonoBehaviour {
+    void Start() {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void play() {
         SceneManager.LoadScene("SampleScene");
     }
 
-    public void reintentar()
-    {
-        Debug.Log("REINTENTAR PRESIONADO");
-        SceneManager.LoadScene("SampleScene");
-    }
-
-    public void quit()
-    {
+    public void quit() {
         Application.Quit();
     }
 }
