@@ -6219,6 +6219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameTimeManager
   realSecondsPerGameHour: 60
+  clockClip: {fileID: 8300000, guid: c75bc4748ff3f65478bff3648b41f8ba, type: 3}
+  clockWinClip: {fileID: 8300000, guid: 5b21e17b60fc23d418176c9e1093ad7f, type: 3}
 --- !u!4 &866794013
 Transform:
   m_ObjectHideFlags: 0

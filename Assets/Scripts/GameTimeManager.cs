@@ -6,24 +6,56 @@ public class GameTimeManager : MonoBehaviour {
     private float currentHour = 0f;
     private bool gameWon = false;
 
+    private int lastHourTracked = 0;
+    public AudioClip clockClip;
+    public AudioClip clockWinClip;
+
     public float CurrentHour => currentHour;
 
     void Update() {
         if (gameWon || !GameManager.Instance.hasPower) return;
 
         currentHour += Time.deltaTime / realSecondsPerGameHour;
-        UIManager.Instance.UpdateTimeText(GetFormattedTime());
-
-        if (currentHour >= 6f) {
-            gameWon = true;
-            SceneManager.LoadScene("WinScreen"); 
+        
+        int hourAsInt = Mathf.FloorToInt(currentHour);
+        if (hourAsInt > lastHourTracked) {
+            OnHourPassed(hourAsInt);
         }
+
+        UIManager.Instance.UpdateTimeText(GetFormattedTime());
+    }
+
+    void OnHourPassed(int newHour) {
+        lastHourTracked = newHour;
+
+        if (newHour >= 6) {
+            gameWon = true;
+            PlayVictorySequence();
+        } else {
+            if (clockClip != null) {
+                GlobalAudioManager.Instance.PlayGlobalSound(clockClip);
+            }
+        }
+    }
+
+    void PlayVictorySequence() {
+        if (clockWinClip != null) {
+            GlobalAudioManager.Instance.PlayGlobalSound(clockWinClip);
+        }
+        
+        Invoke("LoadWinScene", 4f); 
+    }
+
+    void LoadWinScene() {
+        SceneManager.LoadScene("WinScreen");
     }
 
     public string GetFormattedTime() {
         int hour = Mathf.FloorToInt(currentHour);
-        int minutes = Mathf.FloorToInt((currentHour - hour) * 60f);
         int displayHour = (hour == 0) ? 12 : hour;
-        return string.Format("{0}:{1:00} AM", displayHour, minutes);
+        
+        if (hour >= 6) return "6 AM";
+        
+        return string.Format("{0} AM", displayHour);
     }
 }
