@@ -5,7 +5,7 @@ public class PlayerLook : MonoBehaviour {
     public Transform playerCamera;
 
     private float xRotation = 0f;
-    private float mouseSensibility = 25f;
+    private float mouseSensibility = 0.16f;
     private Vector2 mouseInput;
     private bool isActive = true;
 
@@ -19,14 +19,6 @@ public class PlayerLook : MonoBehaviour {
         }
     }
 
-    public void OnLook(InputValue data) {
-        if (!isActive) {
-            mouseInput = Vector2.zero;
-            return;
-        }
-        mouseInput = data.Get<Vector2>();
-    }
-
     public void setActive (bool active) {
         isActive = active;
     }
@@ -36,8 +28,8 @@ public class PlayerLook : MonoBehaviour {
     }
 
     public void LookAround() {
-        float mouseX = mouseInput.x * mouseSensibility * Time.deltaTime;
-        float mouseY = mouseInput.y * mouseSensibility * Time.deltaTime;
+        float mouseX = mouseInput.x * mouseSensibility;
+        float mouseY = mouseInput.y * mouseSensibility;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);

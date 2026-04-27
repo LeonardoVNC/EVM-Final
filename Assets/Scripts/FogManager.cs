@@ -6,12 +6,12 @@ public class FogManager : MonoBehaviour {
     public enum FogState { Default, Flashlight, Camera, PowerOut }
     private FogState currentState = FogState.Default;
 
-    private float defaultDensity = 0.085f;
+    private float defaultDensity = 0.088f;
     private float flashlightDensity = 0.042f;
     private float cameraDensity = 0.02f;
     private float powerOutDensity = 0.15f;
 
-    private float transitionSpeed = 2.8f;
+    private float transitionSpeed = 2.9f;
     private float targetDensity;
 
     void Awake() {

@@ -22,6 +22,8 @@ public class CameraManager : MonoBehaviour {
     }
 
     void Start() {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         ShowPlayerView();
         
         if (staticRawImage != null) {
@@ -59,7 +61,6 @@ public class CameraManager : MonoBehaviour {
         if (!GameManager.Instance.hasPower) return;
 
         isMonitorOpen = !isMonitorOpen;
-
         GameManager.Instance.SetPanelStatus(isMonitorOpen);
 
         if (isMonitorOpen) {

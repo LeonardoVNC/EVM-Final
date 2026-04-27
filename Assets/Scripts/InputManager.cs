@@ -25,7 +25,7 @@ public class InputManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 20f))
         {
-            Debug.Log("Golpeó: " + hit.collider.gameObject.name);
+            //Debug.Log("Golpeó: " + hit.collider.gameObject.name);
             newButton = hit.collider.GetComponent<DoorButton>();
         }
 
@@ -51,7 +51,6 @@ public class InputManager : MonoBehaviour
         {
             cameraManager.ToggleMonitor();
             isMonitorOpen = !isMonitorOpen;
-            GameManager.Instance.SetPanelStatus(isMonitorOpen);
             if (isMonitorOpen && flashlight != null)
             {
                 flashlight.ForceOff();
