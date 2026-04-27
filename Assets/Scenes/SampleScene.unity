@@ -14090,6 +14090,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6811f341e206aa04f87f417c6aa298b0, type: 3}
   batteryLevel: 100
   hasPower: 1
+  powerout: {fileID: 8300000, guid: 6e9979f62f0e75e4195669941bc214b1, type: 3}
   isDoor1Closed: 0
   isDoor2Closed: 0
 --- !u!114 &1978386977

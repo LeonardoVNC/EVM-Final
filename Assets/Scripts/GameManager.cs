@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
     private float baseDrain = 0.1f;
     private float unitDrain = 0.25f;
     public bool hasPower = true;
+    public AudioClip powerout;
 
     private bool isSecPanelOn = false;
     private bool isFlashlightOn = false;
@@ -53,7 +54,9 @@ public class GameManager : MonoBehaviour {
         SetFlashlightStatus(false);
         UIManager.Instance.DisableAllUI();
         FogManager.Instance?.ChangeState(FogManager.FogState.PowerOut);
-        //Aqui wiriwiwi
+        
+        GlobalAudioManager.Instance.PlayGlobalSound(powerout);
+
         Invoke("GoToGameOverScreen", 5f); 
     }
 
