@@ -49,9 +49,12 @@ public class GameManager : MonoBehaviour {
     
     void PowerOut() {
         hasPower = false;
+        SetPanelStatus(false);
+        SetFlashlightStatus(false);
         UIManager.Instance.DisableAllUI();
         FogManager.Instance?.ChangeState(FogManager.FogState.PowerOut);
-        GoToGameOverScreen();
+        //Aqui wiriwiwi
+        Invoke("GoToGameOverScreen", 5f); 
     }
 
     // Control de la UI
@@ -83,6 +86,10 @@ public class GameManager : MonoBehaviour {
     }
 
     // Navegación entre scenes
+    public void Win() {
+        GoToWinScreen();
+    }
+
     public void GoToWinScreen() {
         Instance = null;
         SceneManager.LoadScene("WinScreen");
