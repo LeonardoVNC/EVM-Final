@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour {
 
         isStarting = true;
         GlobalAudioManager.Instance.PlayGlobalSound(clickClip);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Night1");
     }
 
     public void quit() {
