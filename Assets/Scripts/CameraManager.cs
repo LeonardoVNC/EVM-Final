@@ -4,7 +4,12 @@ using UnityEngine.Video;
 using System.Collections.Generic;
 
 public class CameraManager : MonoBehaviour {
-    private List<SecurityCamera> securityCameras = new List<SecurityCamera>();
+    private List<SecurityCamera> floor1Cameras = new List<SecurityCamera>();
+    private List<SecurityCamera> floor2Cameras = new List<SecurityCamera>();
+    private List<SecurityCamera> currentActiveList;
+    public GameObject buttonsFloor1Panel;
+    public GameObject buttonsFloor2Panel;
+
     public Camera playerCamera;
     public PlayerLook playerLookScript;
 
@@ -13,12 +18,14 @@ public class CameraManager : MonoBehaviour {
     public AudioSource staticAudio;
 
     private bool isMonitorOpen = false;
+    private int currentFloor = 1;
 
     void Awake() {
-        foreach (Transform child in transform) {
-            SecurityCamera sCam = child.GetComponent<SecurityCamera>();
-            if (sCam != null) securityCameras.Add(sCam);
-        }
+        Transform f1 = transform.Find("1Floor");
+        if (f1 != null) FillCameraList(f1, floor1Cameras);
+        Transform f2 = transform.Find("2Floor");
+        if (f2 != null) FillCameraList(f2, floor2Cameras);
+        currentActiveList = floor1Cameras;
     }
 
     void Start() {
@@ -40,21 +47,18 @@ public class CameraManager : MonoBehaviour {
         }
     }
 
-    public void ShowPlayerView() {
-        foreach (var cam in securityCameras) cam.SetState(false);
-        playerCamera.enabled = true;
+    void FillCameraList(Transform parent, List<SecurityCamera> list) {
+        foreach (Transform child in parent) {
+            SecurityCamera sCam = child.GetComponent<SecurityCamera>();
+            if (sCam != null) list.Add(sCam);
+        }
     }
 
-    public void SwitchToCamera(int index) {
-        if (index < 0 || index >= securityCameras.Count) return;
-        
-        RestartStaticEffects();
-        StartCoroutine(CameraFlashEffect());
-        
-        playerCamera.enabled = false;
-        for (int i = 0; i < securityCameras.Count; i++) {
-            securityCameras[i].SetState(i == index);
-        }
+    //Control de vista de seguridad
+    public void ShowPlayerView() {
+        foreach (var cam in floor1Cameras) cam.SetState(false);
+        foreach (var cam in floor2Cameras) cam.SetState(false);
+        playerCamera.enabled = true;
     }
 
     public void ToggleMonitor() {
@@ -64,18 +68,16 @@ public class CameraManager : MonoBehaviour {
         GameManager.Instance.SetPanelStatus(isMonitorOpen);
 
         if (isMonitorOpen) {
-            SwitchToCamera(0);
+            SwitchToFloor(1);
             if (staticAudio != null) staticAudio.Play();
             if (staticVideoPlayer != null) staticVideoPlayer.Play();
-        }
-        else {
+        } else {
             ShowPlayerView();
             if (staticAudio != null) staticAudio.Stop();
             if (staticVideoPlayer != null) staticVideoPlayer.Stop();
         }
 
         if (staticRawImage != null) staticRawImage.gameObject.SetActive(isMonitorOpen);
-
         Cursor.lockState = isMonitorOpen ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = isMonitorOpen;
     }
@@ -91,6 +93,7 @@ public class CameraManager : MonoBehaviour {
         Cursor.visible = false;
     }
 
+    //Ambientación
     private void RestartStaticEffects() {
         if (staticVideoPlayer != null && staticVideoPlayer.isPlaying) staticVideoPlayer.time = 0;
         if (staticAudio != null && staticAudio.isPlaying) staticAudio.time = 0;
@@ -102,5 +105,30 @@ public class CameraManager : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
             staticRawImage.color = new Color(1, 1, 1, 0.2f);
         }
+    }
+
+    //Cambio de piso y cámara
+    public void SwitchToCamera(int index) {
+        if (index < 0 || index >= currentActiveList.Count) return;
+        
+        RestartStaticEffects();
+        StartCoroutine(CameraFlashEffect());
+        
+        playerCamera.enabled = false;
+
+        foreach (var cam in floor1Cameras) cam.SetState(false);
+        foreach (var cam in floor2Cameras) cam.SetState(false);
+
+        currentActiveList[index].SetState(true);
+    }
+
+    public void SwitchToFloor(int floor) {
+        currentFloor = floor;
+        currentActiveList = (floor == 1) ? floor1Cameras : floor2Cameras;
+
+        if (buttonsFloor1Panel != null) buttonsFloor1Panel.SetActive(floor == 1);
+        if (buttonsFloor2Panel != null) buttonsFloor2Panel.SetActive(floor == 2);
+
+        SwitchToCamera(0);
     }
 }
