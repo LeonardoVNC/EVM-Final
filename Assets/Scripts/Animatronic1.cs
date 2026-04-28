@@ -2,19 +2,20 @@
 using UnityEngine.AI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 
 public class Animatronic1 : AnimatronicAI
 {
     public Transform[] waypoints;
     public GameTimeManager gameTimeManager;
     public AudioSource footstepAudio;
-
     public DoorController doorControllerLeft;
     public DoorController doorControllerRight;
-
     public string gameOverSceneName = "GameOverScreen";
     public float waitAtDoorTime = 6f;
     public float attackTimer = 3f;
+    public VideoPlayer jumpscareVideo;
+    public UnityEngine.UI.RawImage jumpscareImage;
 
     private int currentWaypoint = 0;
     private bool activated = false;
@@ -50,9 +51,21 @@ public class Animatronic1 : AnimatronicAI
 
         if (waitingAtDoor)
         {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                Vector3 direction = player.transform.position - transform.position;
+                direction.y = 0f;
+                if (direction != Vector3.zero)
+                    transform.rotation = Quaternion.Slerp(
+                        transform.rotation,
+                        Quaternion.LookRotation(-direction),
+                        Time.deltaTime * 5f
+                    );
+            }
+
             doorTimer += Time.deltaTime;
 
-           
             if (IsBlockedByDoor())
             {
                 Debug.Log("A1 bloqueado por puerta, retrocediendo");
@@ -61,8 +74,8 @@ public class Animatronic1 : AnimatronicAI
                 SendBack();
                 return;
             }
+
             attackCountdown -= Time.deltaTime;
-            Debug.Log("A1 esperando, countdown: " + attackCountdown);
 
             if (attackCountdown <= 0f && !attacking)
             {
@@ -74,7 +87,7 @@ public class Animatronic1 : AnimatronicAI
 
         if (reachedDoor) return;
 
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 0.2f)
             GoToNextWaypoint();
 
         if (footstepAudio != null && !footstepAudio.isPlaying)
@@ -107,37 +120,51 @@ public class Animatronic1 : AnimatronicAI
     void OnReachedDoor()
     {
         Debug.Log("A1 llegó a la puerta!");
-        Debug.Log("Izq cerrada: " + (doorControllerLeft != null ? doorControllerLeft.IsClosed().ToString() : "NULL"));
-        Debug.Log("Der cerrada: " + (doorControllerRight != null ? doorControllerRight.IsClosed().ToString() : "NULL"));
-
         waitingAtDoor = true;
         doorTimer = 0f;
         attackCountdown = attackTimer;
 
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            Vector3 direction = player.transform.position - transform.position;
-            direction.y = 0f;
-            transform.rotation = Quaternion.LookRotation(-direction);
-        }
+        agent.ResetPath();
+        agent.velocity = Vector3.zero;
+        agent.updateRotation = false;
     }
+
+    
 
     IEnumerator AttackSequence()
     {
         Debug.Log("JUMPSCARE!");
-        yield return new WaitForSeconds(2f);
+
+        if (jumpscareImage != null) jumpscareImage.gameObject.SetActive(true);
+        if (jumpscareVideo != null)
+        {
+            jumpscareVideo.Play();
+            yield return new WaitForSeconds((float)jumpscareVideo.length);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+        }
+
         GameManager.Instance.GoToGameOverScreen();
     }
 
     public void SendBack()
     {
+        StopAllCoroutines();
+        agent.updateRotation = true;
         reachedDoor = false;
         waitingAtDoor = false;
         attacking = false;
         currentWaypoint = 0;
         doorTimer = 0f;
         attackCountdown = 0f;
-        agent.SetDestination(waypoints[0].position);
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(waypoints[0].position, out hit, 20f, NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position); 
+            agent.SetDestination(waypoints[0].position);
+        }
     }
 }
