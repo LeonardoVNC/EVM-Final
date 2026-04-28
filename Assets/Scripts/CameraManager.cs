@@ -103,7 +103,7 @@ public class CameraManager : MonoBehaviour {
         if (staticRawImage != null) {
             staticRawImage.color = new Color(1, 1, 1, 1);
             yield return new WaitForSeconds(0.1f);
-            staticRawImage.color = new Color(1, 1, 1, 0.2f);
+            staticRawImage.color = new Color(1, 1, 1, 0.65f);
         }
     }
 
