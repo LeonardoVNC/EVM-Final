@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour, IInputState {
     public CameraManager cameraManager;
     public Flashlight flashlight;
     public Camera playerCamera;
+    public PlayerMovement playerMovement;
 
     private DoorButton currentButton = null;
 
