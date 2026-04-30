@@ -22,4 +22,8 @@ public class MonitorState : IInputState {
     public void OnLook(InputValue value) {
         ctx.playerLook.UpdateMouseInput(Vector2.zero);
     }
+
+    public void OnMove(InputValue value) {
+        // Pass
+    }
 }

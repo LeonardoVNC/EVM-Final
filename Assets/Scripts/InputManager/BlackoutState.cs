@@ -1,24 +1,21 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class OfficeState : IInputState {
+public class BlackoutState : IInputState {
     private InputManager ctx;
 
-    public OfficeState(InputManager context) => ctx = context;
+    public BlackoutState(InputManager context) => ctx = context;
 
     public void OnPrimary() {
         if (ctx.flashlight != null) ctx.flashlight.Toggle();
     }
 
     public void OnSecondary() {
-        ctx.cameraManager.ToggleMonitor();
-        ctx.flashlight.ForceOff();
-        GameManager.Instance.SetFlashlightStatus(false);
-        ctx.SetState(new MonitorState(ctx));
+        // Pass
     }
 
     public void OnInteract() {
-        if (ctx.GetCurrentButton() != null) ctx.GetCurrentButton().Press();
+        // Pass
     }
 
     public void OnLook(InputValue value) {
@@ -26,6 +23,7 @@ public class OfficeState : IInputState {
     }
 
     public void OnMove(InputValue value) {
-        // Pass
+        Debug.Log("Mueveteee"+value.Get<Vector2>());
     }
 }
+

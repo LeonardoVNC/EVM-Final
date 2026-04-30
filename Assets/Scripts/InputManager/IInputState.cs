@@ -6,4 +6,5 @@ public interface IInputState {
     void OnSecondary();
     void OnInteract();
     void OnLook(InputValue value);
+    void OnMove(InputValue value);
 }

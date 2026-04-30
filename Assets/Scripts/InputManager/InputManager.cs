@@ -47,6 +47,8 @@ public class InputManager : MonoBehaviour, IInputState {
     public void OnSecondary() => currentState?.OnSecondary();
     public void OnInteract() => currentState?.OnInteract();
     public void OnLook(InputValue value) => currentState?.OnLook(value);
+    public void OnMove(InputValue value) => currentState?.OnMove(value);
+
 
     public DoorButton GetCurrentButton() => currentButton;
 }
