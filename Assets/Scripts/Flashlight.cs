@@ -7,6 +7,7 @@ public class Flashlight : MonoBehaviour {
     public float thresholdStartTicker = 15f; 
     private float tickerTimer = 0f;
     private float tickerSpeed = 0.07f;
+    public AudioClip flickerSound;
 
     void Awake() {
         lightComponent = GetComponent<Light>();
@@ -46,6 +47,11 @@ public class Flashlight : MonoBehaviour {
     }
 
     private void SetLightState(bool active) {
+        if (isOn && !active && flickerSound != null) {
+            float randomAudio = Random.Range(1.00f, 11.00f);
+
+            GlobalAudioManager.Instance.PlaySoundSegment(flickerSound, randomAudio, 0.15f, 0.5f);
+        }
         lightComponent.enabled = active;
         GameManager.Instance.SetFlashlightStatus(active);
     }
