@@ -31,5 +31,14 @@ public class DoorController : MonoBehaviour
             GameManager.Instance.isDoor2Closed = isDoorClosed;
     }
 
+    public void ForceOpen(){
+        isDoorClosed = false;
+        door.SetActive(false);
+        if (isLeftDoor)
+            GameManager.Instance.isDoor1Closed = false;
+        else
+            GameManager.Instance.isDoor2Closed = false;
+    }
+
     public bool IsClosed() => isDoorClosed;
 }

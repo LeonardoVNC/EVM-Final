@@ -50205,6 +50205,8 @@ MonoBehaviour:
   powerout: {fileID: 8300000, guid: 6e9979f62f0e75e4195669941bc214b1, type: 3}
   isDoor1Closed: 0
   isDoor2Closed: 0
+  doorLeft: {fileID: 1955911321}
+  doorRight: {fileID: 1878620139}
 --- !u!114 &1978386977
 MonoBehaviour:
   m_ObjectHideFlags: 0

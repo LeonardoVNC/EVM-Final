@@ -10,11 +10,14 @@ public class GameManager : MonoBehaviour {
     private float unitDrain = 0.25f;
     public bool hasPower = true;
     public AudioClip powerout;
+    private bool isPoweroutActive = false;
 
     private bool isSecPanelOn = false;
     private bool isFlashlightOn = false;
     public bool isDoor1Closed = false;
     public bool isDoor2Closed = false;
+    public DoorController doorLeft;
+    public DoorController doorRight;
 
     void Awake() {
         if (Instance == null) {
@@ -49,15 +52,25 @@ public class GameManager : MonoBehaviour {
     }
     
     void PowerOut() {
-        hasPower = false;
+        if (isPoweroutActive) {
+            hasPower = false;
+            SetFlashlightStatus(false);
+            return;
+        }
+
+        isPoweroutActive = true;
+        batteryLevel = 25f;
+        InputManager.Instance.cameraManager.ForceCloseMonitor();
         SetPanelStatus(false);
-        SetFlashlightStatus(false);
+        isDoor1Closed = false;
+        isDoor2Closed = false;
+        if (doorLeft != null) doorLeft.ForceOpen();
+        if (doorRight != null) doorRight.ForceOpen();
+
+        InputManager.Instance.SetState(new BlackoutState(InputManager.Instance));
         UIManager.Instance.DisableAllUI();
         FogManager.Instance?.ChangeState(FogManager.FogState.PowerOut);
-        
         GlobalAudioManager.Instance.PlayGlobalSound(powerout);
-
-        Invoke("GoToGameOverScreen", 5f); 
     }
 
     // Control de la UI

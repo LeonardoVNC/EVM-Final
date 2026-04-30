@@ -11,12 +11,10 @@ public class OfficeState : IInputState {
     }
 
     public void OnSecondary() {
-        //TEST temporal wiw
-        //ctx.cameraManager.ToggleMonitor();
-        //ctx.flashlight.ForceOff();
-        //GameManager.Instance.SetFlashlightStatus(false);
-        //ctx.SetState(new MonitorState(ctx));
-        ctx.SetState(new BlackoutState(ctx));
+        ctx.cameraManager.ToggleMonitor();
+        ctx.flashlight.ForceOff();
+        GameManager.Instance.SetFlashlightStatus(false);
+        ctx.SetState(new MonitorState(ctx));
     }
 
     public void OnInteract() {
