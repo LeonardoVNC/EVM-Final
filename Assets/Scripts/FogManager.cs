@@ -9,7 +9,7 @@ public class FogManager : MonoBehaviour {
     private float defaultDensity = 0.088f;
     private float flashlightDensity = 0.042f;
     private float cameraDensity = 0.026f;
-    private float powerOutDensity = 0.15f;
+    private float powerOutDensity = 0.2f;
 
     private float transitionSpeed = 2.9f;
     private float targetDensity;

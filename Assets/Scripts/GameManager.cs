@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
         if (isDoor1Closed) consumptionUnits += 1;
         if (isDoor2Closed) consumptionUnits += 1;
 
-        float currentDrain = baseDrain + (consumptionUnits * unitDrain);
+        float currentDrain = (isPoweroutActive? 0:baseDrain) + (consumptionUnits * unitDrain);
         batteryLevel -= currentDrain * Time.deltaTime;
         if (batteryLevel <= 0) {
             batteryLevel = 0;
@@ -69,7 +69,6 @@ public class GameManager : MonoBehaviour {
 
         InputManager.Instance.SetState(new BlackoutState(InputManager.Instance));
         UIManager.Instance.DisableAllUI();
-        FogManager.Instance?.ChangeState(FogManager.FogState.PowerOut);
         GlobalAudioManager.Instance.PlayGlobalSound(powerout);
     }
 
@@ -83,10 +82,13 @@ public class GameManager : MonoBehaviour {
 
     void UpdateAtmosphere() {
         if (FogManager.Instance == null) return;
-        if (isSecPanelOn)
-            FogManager.Instance.ChangeState(FogManager.FogState.Camera);
-        else if (isFlashlightOn)
+
+        if (isFlashlightOn)
             FogManager.Instance.ChangeState(FogManager.FogState.Flashlight);
+        else if (isSecPanelOn)
+            FogManager.Instance.ChangeState(FogManager.FogState.Camera);
+        else if (isPoweroutActive) 
+            FogManager.Instance?.ChangeState(FogManager.FogState.PowerOut);
         else
             FogManager.Instance.ChangeState(FogManager.FogState.Default);
     }
