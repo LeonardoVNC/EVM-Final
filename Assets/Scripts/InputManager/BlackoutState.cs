@@ -23,7 +23,6 @@ public class BlackoutState : IInputState {
     }
 
     public void OnMove(InputValue value) {
-        Debug.Log("Mueveteee"+value.Get<Vector2>());
         ctx.playerMovement.SetMovementInput(value.Get<Vector2>());
     }
 }

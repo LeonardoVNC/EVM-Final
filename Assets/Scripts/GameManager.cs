@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
+        UIManager.Instance.ShowBlackoutMessages();
         isPoweroutActive = true;
         batteryLevel = 25f;
         InputManager.Instance.cameraManager.ForceCloseMonitor();

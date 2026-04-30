@@ -60,4 +60,19 @@ public class UIManager : MonoBehaviour {
         yield return ShowMessage("Usa [E] y apunta a los botones para cerrar las puertas", 4f);
         yield return ShowMessage("Buena suerte", 4f);
     }
+
+    public void ShowBlackoutMessages() {
+        StartCoroutine(BlackoutSequence());
+    }
+
+    IEnumerator BlackoutSequence() {
+        if (temporalText == null) yield break;
+
+        yield return ShowMessage("Vaina... Te quedaste sin energía", 4f);
+        yield return ShowMessage("Agarra tu linterna y escóndete", 4f);
+        yield return ShowMessage("Debes evitar que te encuentren hasta que amanezca", 4f);
+        yield return ShowMessage("Cuida tu batería esta vez", 4f);
+        yield return ShowMessage("No tienes más oportunidades", 4f);
+        yield return ShowMessage("Buena suerte", 4f);
+    }
 }

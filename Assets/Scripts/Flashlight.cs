@@ -50,7 +50,7 @@ public class Flashlight : MonoBehaviour {
         if (isOn && !active && flickerSound != null) {
             float randomAudio = Random.Range(1.00f, 11.00f);
 
-            GlobalAudioManager.Instance.PlaySoundSegment(flickerSound, randomAudio, 0.15f, 0.5f);
+            GlobalAudioManager.Instance.PlaySoundSegment(flickerSound, randomAudio, 0.15f, 0.75f);
         }
         lightComponent.enabled = active;
         GameManager.Instance.SetFlashlightStatus(active);

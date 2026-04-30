@@ -26432,6 +26432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d15958b42b6784c916bfae8cdc40d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Flashlight
+  thresholdStartTicker: 20
+  flickerSound: {fileID: 8300000, guid: 001b7609cef812745a68c7109a107690, type: 3}
 --- !u!114 &1160276433
 MonoBehaviour:
   m_ObjectHideFlags: 0
