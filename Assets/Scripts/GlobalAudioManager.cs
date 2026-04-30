@@ -37,4 +37,18 @@ public class GlobalAudioManager : MonoBehaviour {
             audioSource.PlayOneShot(clip, volume);
         }
     }
+
+    public void PlaySoundSegment(AudioClip clip, float startTime, float duration, float volume = 1f) {
+        if (clip == null) return;
+
+        GameObject tempGO = new GameObject("TempAudio");
+        AudioSource source = tempGO.AddComponent<AudioSource>();
+        source.clip = clip;
+        source.volume = volume;
+        source.time = startTime;
+        source.Play();
+    
+        Destroy(tempGO, duration);
+        DontDestroyOnLoad(tempGO); 
+    }
 }
