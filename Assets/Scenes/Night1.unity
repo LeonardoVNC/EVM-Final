@@ -6085,17 +6085,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 17699934}
   m_VersionIndex: 5558
   m_IsSelectable: 1
-  m_SelectedFaces: 05000000
-  m_SelectedEdges:
-  - a: 20
-    b: 21
-  - a: 22
-    b: 20
-  - a: 21
-    b: 23
-  - a: 23
-    b: 22
-  m_SelectedVertices: 14000000150000001600000017000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!43 &252927469
 Mesh:
   m_ObjectHideFlags: 0
@@ -47655,7 +47647,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -9.999634}
+  m_AnchoredPosition: {x: 0, y: -9.999512}
   m_SizeDelta: {x: 0, y: 1180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1856772367
@@ -50125,9 +50117,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1978386975}
   - component: {fileID: 1978386974}
-  - component: {fileID: 1978386973}
   - component: {fileID: 1978386976}
   - component: {fileID: 1978386977}
+  - component: {fileID: 1978386978}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -50135,22 +50127,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1978386973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978386972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03ab089a46ed8bb42b5792e8be2c5b6d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InputManager
-  playerLook: {fileID: 1017839707}
-  cameraManager: {fileID: 1458169585}
-  flashlight: {fileID: 1160276432}
-  playerCamera: {fileID: 330585545}
 --- !u!114 &1978386974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50163,7 +50139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
-  m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 86bba3f5d14cb2b4385448ca971ba39b, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -50178,7 +50154,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Play
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!4 &1978386975
@@ -50230,6 +50206,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf63d1dcabde6ae45ac6a105cd6ea3d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FogManager
+--- !u!114 &1978386978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978386972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6acb8315e553af14696a538f661174cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  playerLook: {fileID: 1017839707}
+  cameraManager: {fileID: 1458169585}
+  flashlight: {fileID: 1160276432}
+  playerCamera: {fileID: 330585545}
 --- !u!1 &1979275530
 GameObject:
   m_ObjectHideFlags: 0
