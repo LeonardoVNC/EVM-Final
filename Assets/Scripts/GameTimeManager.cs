@@ -6,6 +6,8 @@ public class GameTimeManager : MonoBehaviour {
     private int lastHourTracked = 0;
     private bool timeStopped = false;
 
+    public BaseAnimatronic[] animatronics;
+
     public AudioClip clockClip;
     public AudioClip clockWinClip;
 
@@ -27,6 +29,7 @@ public class GameTimeManager : MonoBehaviour {
     void OnHourPassed(int newHour) {
         lastHourTracked = newHour;
 
+        CheckAnimatronics(newHour);
         if (newHour >= 6) {
             timeStopped = true;
             if (clockWinClip != null) GlobalAudioManager.Instance.PlayGlobalSound(clockWinClip);
@@ -38,6 +41,12 @@ public class GameTimeManager : MonoBehaviour {
     }
 
     void NotifyWin() => GameManager.Instance.Win();
+
+    private void CheckAnimatronics(int newHour) {
+        if (newHour == 1) {
+            animatronics[0].Activate();
+        }
+    }
 
     public string GetFormattedTime() {
         int hour = Mathf.FloorToInt(currentHour);
