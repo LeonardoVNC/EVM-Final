@@ -7,6 +7,7 @@ public class GameTimeManager : MonoBehaviour {
     private bool timeStopped = false;
 
     public BaseAnimatronic[] animatronics;
+    private int difficultyIncrease = 2;
 
     public AudioClip clockClip;
     public AudioClip clockWinClip;
@@ -45,6 +46,11 @@ public class GameTimeManager : MonoBehaviour {
     private void CheckAnimatronics(int newHour) {
         if (newHour == 1) {
             animatronics[0].Activate();
+        }
+        foreach (BaseAnimatronic anim in animatronics) {
+            if (anim != null) {
+                anim.IncreaseDifficulty(difficultyIncrease);
+            }
         }
     }
 

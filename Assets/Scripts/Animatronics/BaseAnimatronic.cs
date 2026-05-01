@@ -116,4 +116,8 @@ public abstract class BaseAnimatronic : MonoBehaviour {
             currentWaypoint = 0;
         }
     }
+
+    public void IncreaseDifficulty(int amount) {
+        aiLevel = Mathf.Clamp(aiLevel + amount, 0, 20);
+    }
 }
