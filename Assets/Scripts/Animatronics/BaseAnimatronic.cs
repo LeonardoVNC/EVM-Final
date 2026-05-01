@@ -21,6 +21,10 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     public float movementInterval = 5f;
     protected float movementTimer;
 
+    public float detectionRange = 5f;
+    public float chaseSpeed = 4f;
+    protected Transform playerTransform;
+
     protected virtual void Awake() {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
@@ -29,6 +33,11 @@ public abstract class BaseAnimatronic : MonoBehaviour {
             agent.speed = moveSpeed;
             agent.enabled = false;
         }
+    }
+
+    protected virtual void Start() {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null) playerTransform = player.transform;
     }
 
     protected virtual void Update() {
@@ -69,13 +78,18 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     }
 
     protected void LookAtPlayer() {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null) {
-            Vector3 direction = player.transform.position - transform.position;
+        if (playerTransform != null) {
+            Vector3 direction = playerTransform.position - transform.position;
             direction.y = 0f;
             if (direction != Vector3.zero)
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-direction), Time.deltaTime * 5f);
         }
+    }
+
+    protected void PatrolWaypoints() {
+        if (waypoints.Length == 0) return;
+        agent.SetDestination(waypoints[currentWaypoint].position);
+        currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
     }
 
     protected abstract void OnMovementTick();

@@ -71,6 +71,20 @@ public class Animatronic1 : BaseAnimatronic {
     }
 
     protected override void HandleBlackoutAI() {
-        Debug.Log("Modo blackout chico");
+        if (playerTransform == null) return;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+        if (distanceToPlayer <= detectionRange) {
+            agent.speed = chaseSpeed;
+            agent.SetDestination(playerTransform.position);
+            if (distanceToPlayer < 3.5f) {
+                StartCoroutine(AttackSequence());
+            }
+        } else {
+            agent.speed = moveSpeed * 0.5f;
+            if (!agent.pathPending && agent.remainingDistance < 0.5f) {
+                PatrolWaypoints();
+            }
+        }
     }
 }

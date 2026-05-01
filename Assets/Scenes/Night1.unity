@@ -11926,6 +11926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c9073ef3067f64e9e09dbdc297ce54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Animatronic1
+  currentAIState: 0
   moveSpeed: 7
   waypoints:
   - {fileID: 635004595636285177}
@@ -11938,6 +11939,8 @@ MonoBehaviour:
   aiLevel: 8
   attackTimer: 4
   movementInterval: 5
+  detectionRange: 15
+  chaseSpeed: 7
   doorControllerRight: {fileID: 1878620139}
   jumpscareVideo: {fileID: 1357742741}
   jumpscareImage: {fileID: 1856772367}
@@ -50909,7 +50912,7 @@ GameObject:
   - component: {fileID: 1017839709}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97396,6 +97399,7 @@ MonoBehaviour:
   batteryLevel: 100
   hasPower: 1
   powerout: {fileID: 8300000, guid: 6e9979f62f0e75e4195669941bc214b1, type: 3}
+  isPoweroutActive: 0
   isDoor1Closed: 0
   isDoor2Closed: 0
   doorLeft: {fileID: 1955911321}
