@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
     private float unitDrain = 0.25f;
     public bool hasPower = true;
     public AudioClip powerout;
-    private bool isPoweroutActive = false;
+    public bool isPoweroutActive = false;
 
     private bool isSecPanelOn = false;
     private bool isFlashlightOn = false;

@@ -69,4 +69,8 @@ public class Animatronic1 : BaseAnimatronic {
             agent.SetDestination(waypoints[0].position);
         }
     }
+
+    protected override void HandleBlackoutAI() {
+        Debug.Log("Modo blackout chico");
+    }
 }

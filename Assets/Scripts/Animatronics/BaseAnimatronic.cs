@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public abstract class BaseAnimatronic : MonoBehaviour {
+    public enum AIState { Default, Blackout }
+    public AIState currentAIState = AIState.Default;
+
     protected NavMeshAgent agent;
     protected Animator animator;
     
@@ -31,17 +34,29 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     protected virtual void Update() {
         if (!isActive) return;
 
+        if (GameManager.Instance.isPoweroutActive && currentAIState != AIState.Blackout) {
+            SetAIState(AIState.Blackout);
+        }
+
+        if (currentAIState == AIState.Default) {
+            HandleDefaultAI();
+        } else {
+            HandleBlackoutAI();
+        }
+    }
+
+    protected virtual void HandleDefaultAI() {
         if (animator != null && agent != null) {
             bool isMoving = agent.velocity.magnitude > 0.1f && !agent.isStopped;
             animator.SetBool("isWalking", isMoving);
         }
 
-    if (waitingAtDoor) {
-        LookAtPlayer();
-        HandleDoorWaiting();
-    } else if (!reachedDoor) {
-        HandleMovementProbability();
-    }
+        if (waitingAtDoor) {
+            LookAtPlayer();
+            HandleDoorWaiting();
+        } else if (!reachedDoor) {
+            HandleMovementProbability();
+        }
     }
 
     private void HandleMovementProbability() {
@@ -65,6 +80,7 @@ public abstract class BaseAnimatronic : MonoBehaviour {
 
     protected abstract void OnMovementTick();
     protected abstract void HandleDoorWaiting();
+    protected abstract void HandleBlackoutAI();
 
     public virtual void Activate() {
         isActive = true;
@@ -74,5 +90,16 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     public virtual void Deactivate() {
         isActive = false;
         if (agent != null) agent.enabled = false;
+    }
+
+    public virtual void SetAIState(AIState newState) {
+        currentAIState = newState;
+        
+        if (newState == AIState.Blackout) {
+            agent.speed = moveSpeed * 0.5f; 
+            reachedDoor = false;
+            waitingAtDoor = false;
+            currentWaypoint = 0;
+        }
     }
 }
