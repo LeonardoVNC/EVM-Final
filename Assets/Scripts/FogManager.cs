@@ -17,6 +17,7 @@ public class FogManager : MonoBehaviour {
     void Awake() {
         if (Instance == null) Instance = this;
         targetDensity = defaultDensity;
+        RenderSettings.fog = true;
     }
 
     void Update() {
