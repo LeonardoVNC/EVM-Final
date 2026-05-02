@@ -6,6 +6,10 @@ public class MonitorState : IInputState {
 
     public MonitorState(InputManager context) => ctx = context;
 
+    public void OnUpdate() {
+        //Pass
+    }
+
     public void OnPrimary() {
         // Pass
     }
@@ -20,7 +24,7 @@ public class MonitorState : IInputState {
     }
 
     public void OnLook(InputValue value) {
-        ctx.playerLook.UpdateMouseInput(Vector2.zero);
+        // Pass
     }
 
     public void OnMove(InputValue value) {

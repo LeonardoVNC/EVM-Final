@@ -6,6 +6,10 @@ public class BlackoutState : IInputState {
 
     public BlackoutState(InputManager context) => ctx = context;
 
+    public void OnUpdate() {
+        //Pass
+    }
+
     public void OnPrimary() {
         if (ctx.flashlight != null) ctx.flashlight.Toggle();
     }

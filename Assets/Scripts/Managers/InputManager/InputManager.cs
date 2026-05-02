@@ -6,12 +6,11 @@ public class InputManager : MonoBehaviour, IInputState {
     
     private IInputState currentState;
 
-    public PlayerLook playerLook;
     public CameraManager cameraManager;
-    public Flashlight flashlight;
-    public Camera playerCamera;
+    public PlayerLook playerLook;
     public PlayerMovement playerMovement;
-
+    public Camera playerCamera;
+    public Flashlight flashlight;
     private DoorButton currentButton = null;
 
     void Awake() {
@@ -24,26 +23,14 @@ public class InputManager : MonoBehaviour, IInputState {
     }
 
     void Update() {
-        if (playerCamera == null) return;
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        RaycastHit hit;
-        DoorButton newButton = null;
-
-        if (Physics.Raycast(ray, out hit, 20f)) {
-            newButton = hit.collider.GetComponent<DoorButton>();
-        }
-
-        if (newButton != currentButton) {
-            if (currentButton != null) currentButton.SetHighlight(false);
-            if (newButton != null) newButton.SetHighlight(true);
-            currentButton = newButton;
-        }
+        OnUpdate();
     }
 
     public void SetState(IInputState newState) {
         currentState = newState;
     }
 
+    public void OnUpdate() => currentState?.OnUpdate();
     public void OnPrimary() => currentState?.OnPrimary();
     public void OnSecondary() => currentState?.OnSecondary();
     public void OnInteract() => currentState?.OnInteract();
@@ -52,4 +39,5 @@ public class InputManager : MonoBehaviour, IInputState {
 
 
     public DoorButton GetCurrentButton() => currentButton;
+    public void SetCurrentButton(DoorButton newButton) => currentButton=newButton;
 }

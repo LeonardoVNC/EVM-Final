@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public interface IInputState {
+    void OnUpdate();
     void OnPrimary();
     void OnSecondary();
     void OnInteract();
