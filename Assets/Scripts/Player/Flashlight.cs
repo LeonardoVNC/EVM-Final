@@ -21,7 +21,7 @@ public class Flashlight : MonoBehaviour {
     }
 
     void HandleTicker() {
-        float currentBattery = GameManager.Instance.batteryLevel;
+        float currentBattery = GameManager.Instance.BatteryLevel;
 
         if (currentBattery > thresholdStartTicker) {
             if (!lightComponent.enabled) SetLightState(true);
@@ -57,7 +57,7 @@ public class Flashlight : MonoBehaviour {
     }
 
     public void Toggle() {
-        if (GameManager.Instance.batteryLevel <= 0) return;
+        if (GameManager.Instance.BatteryLevel <= 0) return;
 
         isOn = !isOn;
         SetLightState(isOn);

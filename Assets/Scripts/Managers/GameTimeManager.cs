@@ -15,10 +15,9 @@ public class GameTimeManager : MonoBehaviour {
     public float CurrentHour => currentHour;
 
     void Update() {
-        if (timeStopped || !GameManager.Instance.hasPower) return;
+        if (timeStopped || !GameManager.Instance.HasPower) return;
 
         currentHour += Time.deltaTime / realSecondsPerGameHour;
-        
         int hourAsInt = Mathf.FloorToInt(currentHour);
         if (hourAsInt > lastHourTracked) {
             OnHourPassed(hourAsInt);

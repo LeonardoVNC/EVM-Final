@@ -10,34 +10,28 @@ public class DoorController : MonoBehaviour
 
     void Start()
     {
-        
         isDoorClosed = startClosed;
         door.SetActive(isDoorClosed);
-
-        if (isLeftDoor)
-            GameManager.Instance.isDoor1Closed = isDoorClosed;
-        else
-            GameManager.Instance.isDoor2Closed = isDoorClosed;
     }
 
     public void ToggleDoor()
     {
         isDoorClosed = !isDoorClosed;
         door.SetActive(isDoorClosed);
-
         if (isLeftDoor)
-            GameManager.Instance.isDoor1Closed = isDoorClosed;
+            GameManager.Instance.ToogleDoor1(isDoorClosed);
         else
-            GameManager.Instance.isDoor2Closed = isDoorClosed;
+            GameManager.Instance.ToogleDoor2(isDoorClosed);
     }
 
-    public void ForceOpen(){
+    public void ForceOpen()
+    {
         isDoorClosed = false;
         door.SetActive(false);
         if (isLeftDoor)
-            GameManager.Instance.isDoor1Closed = false;
+            GameManager.Instance.ToogleDoor1(false);
         else
-            GameManager.Instance.isDoor2Closed = false;
+            GameManager.Instance.ToogleDoor2(false);
     }
 
     public bool IsClosed() => isDoorClosed;

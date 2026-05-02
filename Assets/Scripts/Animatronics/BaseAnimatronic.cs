@@ -43,7 +43,7 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     protected virtual void Update() {
         if (!isActive) return;
 
-        if (GameManager.Instance.isPoweroutActive && currentAIState != AIState.Blackout) {
+        if (GameManager.Instance.IsPoweroutActive && currentAIState != AIState.Blackout) {
             SetAIState(AIState.Blackout);
         }
 

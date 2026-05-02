@@ -7,18 +7,15 @@ public class CameraManager : MonoBehaviour {
     private List<SecurityCamera> floor1Cameras = new List<SecurityCamera>();
     private List<SecurityCamera> floor2Cameras = new List<SecurityCamera>();
     private List<SecurityCamera> currentActiveList;
+    private bool isMonitorOpen = false;
+    private int currentFloor = 1;
+
     public GameObject buttonsFloor1Panel;
     public GameObject buttonsFloor2Panel;
-
     public Camera playerCamera;
-    public PlayerLook playerLookScript;
-
     public RawImage staticRawImage;
     public VideoPlayer staticVideoPlayer;
     public AudioSource staticAudio;
-
-    private bool isMonitorOpen = false;
-    private int currentFloor = 1;
 
     void Awake() {
         Transform f1 = transform.Find("1Floor");
@@ -37,7 +34,6 @@ public class CameraManager : MonoBehaviour {
             staticRawImage.gameObject.SetActive(false);
             staticRawImage.raycastTarget = false;
         }
-        
         if (staticVideoPlayer != null) staticVideoPlayer.Prepare();
     }
 
@@ -62,7 +58,7 @@ public class CameraManager : MonoBehaviour {
     }
 
     public void ToggleMonitor() {
-        if (!GameManager.Instance.hasPower) return;
+        if (!GameManager.Instance.HasPower) return;
 
         isMonitorOpen = !isMonitorOpen;
         GameManager.Instance.SetPanelStatus(isMonitorOpen);

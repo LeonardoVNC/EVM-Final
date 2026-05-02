@@ -5,17 +5,17 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
 
     public Sprite[] consumptionSprites;
-    public float batteryLevel = 100f;
+    private float batteryLevel = 100f;
     private float baseDrain = 0.1f;
     private float unitDrain = 0.25f;
-    public bool hasPower = true;
-    public AudioClip powerout;
-    public bool isPoweroutActive = false;
-
     private bool isSecPanelOn = false;
     private bool isFlashlightOn = false;
-    public bool isDoor1Closed = false;
-    public bool isDoor2Closed = false;
+    private bool isDoor1Closed = false;
+    private bool isDoor2Closed = false;
+    private bool isPoweroutActive = false;
+    private bool hasPower = true;
+
+    public AudioClip powerout;
     public DoorController doorLeft;
     public DoorController doorRight;
 
@@ -118,4 +118,12 @@ public class GameManager : MonoBehaviour {
         Instance = null;
         SceneManager.LoadScene("GameOverScreen");
     }
+
+    // Getters
+    public float BatteryLevel => batteryLevel;
+    public bool HasPower => hasPower;
+    public bool IsPoweroutActive => isPoweroutActive;
+    // Setters
+    public void ToogleDoor1(bool closed) => isDoor1Closed = closed;
+    public void ToogleDoor2(bool closed) => isDoor2Closed = closed;
 }
