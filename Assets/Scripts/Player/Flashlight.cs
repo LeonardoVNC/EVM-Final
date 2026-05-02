@@ -3,10 +3,10 @@ using UnityEngine;
 public class Flashlight : MonoBehaviour {
     private Light lightComponent;
     private bool isOn = false;
-
-    public float thresholdStartTicker = 15f; 
+    private float thresholdStartTicker = 15f; 
     private float tickerTimer = 0f;
     private float tickerSpeed = 0.07f;
+
     public AudioClip flickerSound;
 
     void Awake() {
@@ -15,7 +15,7 @@ public class Flashlight : MonoBehaviour {
     }
 
     void Update() {
-        if (isOn) {
+        if (GameManager.Instance.IsPoweroutActive && isOn) {
             HandleTicker();
         }
     }
@@ -54,6 +54,7 @@ public class Flashlight : MonoBehaviour {
         }
         lightComponent.enabled = active;
         GameManager.Instance.SetFlashlightStatus(active);
+        UIManager.Instance.SetFlashlightIcon(active);
     }
 
     public void Toggle() {

@@ -1,13 +1,11 @@
 using UnityEngine;
 
-public class SecurityCamera : MonoBehaviour
-{
+public class SecurityCamera : MonoBehaviour {
     private Quaternion initialRotation;
     private Camera cam;
 
     private float rotationRange = 10f;
     private float rotationSpeed = 0.2f;
-
     private float localTime = 0f;
     private bool isActive = false;
 

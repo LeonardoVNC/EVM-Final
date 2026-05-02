@@ -9,10 +9,6 @@ public class PlayerLook : MonoBehaviour {
     private Vector2 mouseInput;
     private bool isActive = true;
 
-    void Start() {
-        
-    }
-
     void Update() {
         if (isActive) {
             LookAround();

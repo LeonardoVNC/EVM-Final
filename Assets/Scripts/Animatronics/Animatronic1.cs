@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Video;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Animatronic1 : BaseAnimatronic {
     public DoorController doorControllerRight;
-    public UnityEngine.Video.VideoPlayer jumpscareVideo;
-    public UnityEngine.UI.RawImage jumpscareImage;
+    public VideoPlayer jumpscareVideo;
+    public RawImage jumpscareImage;
 
     protected override void OnMovementTick() {
         if (reachedDoor || waypoints.Length == 0 || agent.pathPending) return;

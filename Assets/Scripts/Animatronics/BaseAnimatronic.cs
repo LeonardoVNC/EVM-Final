@@ -5,25 +5,23 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     public enum AIState { Default, Blackout }
     public AIState currentAIState = AIState.Default;
 
-    protected NavMeshAgent agent;
-    protected Animator animator;
-    
-    public float moveSpeed = 2f;
     public Transform[] waypoints;
-    protected int currentWaypoint = 0;
-
-    public bool isActive = false;
-    public bool reachedDoor = false;
-    public bool waitingAtDoor = false;
-    protected float attackCountdown;
     public int aiLevel = 1; //1-20
+    public float moveSpeed = 6f;
     public float attackTimer = 3f;
     public float movementInterval = 5f;
-    protected float movementTimer;
-
-    public float detectionRange = 5f;
+    public float detectionRange = 10f;
     public float chaseSpeed = 4f;
+
+    protected NavMeshAgent agent;
+    protected Animator animator;
     protected Transform playerTransform;
+    protected bool isActive = false;
+    protected float movementTimer;
+    protected int currentWaypoint = 0;
+    protected bool reachedDoor = false;
+    protected bool waitingAtDoor = false;
+    protected float attackCountdown;
 
     protected virtual void Awake() {
         agent = GetComponent<NavMeshAgent>();

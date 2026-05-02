@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour {
     void PowerOut() {
         if (isPoweroutActive) {
             hasPower = false;
-            SetFlashlightStatus(false);
+            isFlashlightOn = false;
             return;
         }
 
@@ -99,10 +99,7 @@ public class GameManager : MonoBehaviour {
         UIManager.Instance.SetSecurityPanelActive(status);
     }
 
-    public void SetFlashlightStatus(bool status) {
-        isFlashlightOn = status;
-        UIManager.Instance.SetFlashlightIcon(status);
-    }
+    public void SetFlashlightStatus(bool status) => isFlashlightOn = status;
 
     // Navegación entre scenes
     public void Win() {
