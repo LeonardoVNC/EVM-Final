@@ -10,6 +10,7 @@ public class CameraManager : MonoBehaviour {
     private bool isMonitorOpen = false;
     private int currentFloor = 1;
 
+    public List<Sprite> panelBackgrounds;
     public GameObject buttonsFloor1Panel;
     public GameObject buttonsFloor2Panel;
     public Camera playerCamera;
@@ -125,6 +126,12 @@ public class CameraManager : MonoBehaviour {
         if (buttonsFloor1Panel != null) buttonsFloor1Panel.SetActive(floor == 1);
         if (buttonsFloor2Panel != null) buttonsFloor2Panel.SetActive(floor == 2);
 
+        int index = floor-1;
+        if (index >= 0 && index < panelBackgrounds.Count)
+            UIManager.Instance.SetSecurityPanelBackground(panelBackgrounds[index]);
+        else
+            Debug.Log("Te falto asignar el fondo para este piso moyai");
+        
         SwitchToCamera(0);
     }
 }

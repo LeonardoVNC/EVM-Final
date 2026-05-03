@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour {
     public GameObject flashlightIcon;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI temporalText;
+    public Image securityPanelBG;
 
     public GameObject securityUI;
     public GameObject gameUI;
@@ -21,6 +22,7 @@ public class UIManager : MonoBehaviour {
     }
 
     void Start() {
+        securityUI?.SetActive(false);
         StartCoroutine(TutorialSequence());
     }
 
@@ -31,6 +33,10 @@ public class UIManager : MonoBehaviour {
     }
 
     public void SetFlashlightIcon(bool active) => flashlightIcon?.SetActive(active);
+
+    public void SetSecurityPanelBackground(Sprite sprite) {
+        securityPanelBG.sprite = sprite;
+    }
 
     public void UpdateTimeText(string formattedTime) {
         if (timeText != null) timeText.text = formattedTime;
