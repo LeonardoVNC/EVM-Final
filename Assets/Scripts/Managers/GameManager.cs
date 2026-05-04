@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
     public AudioClip powerout;
     public DoorController doorLeft;
     public DoorController doorRight;
+    public PauseMenu pauseMenu;
 
     void Awake() {
         if (Instance == null) {
@@ -115,6 +116,14 @@ public class GameManager : MonoBehaviour {
         Instance = null;
         SceneManager.LoadScene("GameOverScreen");
     }
+
+    // Pausa
+    
+    public void OnPause() {
+        pauseMenu.SetPause(returnWithClick);
+    }
+
+    private bool returnWithClick => isSecPanelOn;
 
     // Getters
     public float BatteryLevel => batteryLevel;
