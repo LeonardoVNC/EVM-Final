@@ -76,4 +76,7 @@ crashlytics-build.properties
 # Ignorar fuentes generadas y sus metadatos
 Assets/Fonts/*.asset
 Assets/Fonts/*.asset.meta
+
+/Assets/Fonts/*.asset
+/Assets/Fonts/*.asset.meta
 # End of https://www.toptal.com/developers/gitignore/api/unity
