@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour, IInputState {
     public Camera playerCamera;
     public Flashlight flashlight;
     private DoorButton currentButton = null;
+    private bool blockInput = false;
 
     void Awake() {
         if (Instance == null) Instance = this;
@@ -30,14 +31,16 @@ public class InputManager : MonoBehaviour, IInputState {
         currentState = newState;
     }
 
-    public void OnUpdate() => currentState?.OnUpdate();
-    public void OnPrimary() => currentState?.OnPrimary();
-    public void OnSecondary() => currentState?.OnSecondary();
-    public void OnInteract() => currentState?.OnInteract();
-    public void OnLook(InputValue value) => currentState?.OnLook(value);
-    public void OnMove(InputValue value) => currentState?.OnMove(value);
+    public void OnUpdate() {if (!blockInput) currentState?.OnUpdate();}
+    public void OnPrimary() {if (!blockInput) currentState?.OnPrimary();}
+    public void OnSecondary() {if (!blockInput) currentState?.OnSecondary();}
+    public void OnInteract() {if (!blockInput) currentState?.OnInteract();}
+    public void OnLook(InputValue value) {if (!blockInput) currentState?.OnLook(value);}
+    public void OnMove(InputValue value) {if (!blockInput) currentState?.OnMove(value);}
 
+    public void OnPause() => GameManager.Instance.OnPause();
 
     public DoorButton GetCurrentButton() => currentButton;
     public void SetCurrentButton(DoorButton newButton) => currentButton=newButton;
+    public void SetBlockInput(bool block) => blockInput=block;
 }

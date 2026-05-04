@@ -14,10 +14,12 @@ public class GameManager : MonoBehaviour {
     private bool isDoor2Closed = false;
     private bool isPoweroutActive = false;
     private bool hasPower = true;
+    private bool isAlive = true;
 
     public AudioClip powerout;
     public DoorController doorLeft;
     public DoorController doorRight;
+    public PauseMenu pauseMenu;
 
     void Awake() {
         if (Instance == null) {
@@ -116,6 +118,14 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene("GameOverScreen");
     }
 
+    // Pausa
+    
+    public void OnPause() {
+        if (isAlive) pauseMenu.SetPause(returnWithClick);
+    }
+
+    private bool returnWithClick => isSecPanelOn;
+
     // Getters
     public float BatteryLevel => batteryLevel;
     public bool HasPower => hasPower;
@@ -123,4 +133,5 @@ public class GameManager : MonoBehaviour {
     // Setters
     public void ToogleDoor1(bool closed) => isDoor1Closed = closed;
     public void ToogleDoor2(bool closed) => isDoor2Closed = closed;
+    public void SetAlive(bool alive) => isAlive = alive;
 }
