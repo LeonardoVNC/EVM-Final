@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
+    private bool isPause = false;
     private bool isClicked = false;
     private bool returnWithClick = false;
     public AudioClip clickClip;
@@ -11,14 +12,18 @@ public class PauseMenu : MonoBehaviour {
     }
 
     public void SetPause(bool returnWithClick) {
+        if (isPause) {
+            Continue();
+            return;
+        }
         this.returnWithClick = returnWithClick;
 
+        isPause = true;
         this.gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         isClicked = false;
 
-        //Aqui control del tiempo?? creo que el delta time se pone a 000000000000000000000000000000 xdxdx o como sea dx, habra metodo?
         InputManager.Instance.SetBlockInput(true);
         Time.timeScale = 0f;
     }
@@ -30,7 +35,6 @@ public class PauseMenu : MonoBehaviour {
         GlobalAudioManager.Instance.PlayGlobalSound(clickClip);
 
         if (returnWithClick) {
-            //En vano creo, pero porsia
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         } else {
@@ -38,10 +42,10 @@ public class PauseMenu : MonoBehaviour {
             Cursor.visible = false;;
         }
 
-        //Devolver el tiempo a la normalidad
         InputManager.Instance.SetBlockInput(false);
         Time.timeScale = 1f;
         
+        isPause = false;
         this.gameObject.SetActive(false);
     }
 
