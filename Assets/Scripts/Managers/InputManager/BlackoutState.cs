@@ -15,7 +15,7 @@ public class BlackoutState : IInputState {
     }
 
     public void OnSecondary() {
-        // Pass
+        ctx.playerMovement.Jump();
     }
 
     public void OnInteract() {
