@@ -77,6 +77,4 @@ crashlytics-build.properties
 Assets/Fonts/*.asset
 Assets/Fonts/*.asset.meta
 
-/Assets/Fonts/*.asset
-/Assets/Fonts/*.asset.meta
 # End of https://www.toptal.com/developers/gitignore/api/unity
