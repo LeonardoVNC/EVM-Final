@@ -7,15 +7,11 @@ public class PauseMenu : MonoBehaviour {
     private bool returnWithClick = false;
     public AudioClip clickClip;
 
-    void Start() {
+    void Awake() {
         this.gameObject.SetActive(false);
     }
 
     public void SetPause(bool returnWithClick) {
-        if (isPause) {
-            Continue();
-            return;
-        }
         this.returnWithClick = returnWithClick;
 
         isPause = true;

@@ -46,6 +46,9 @@ public class GameTimeManager : MonoBehaviour {
         if (newHour == 1) {
             animatronics[0].Activate();
         }
+        if (newHour == 2) {
+            animatronics[1].Activate();
+        }
         foreach (BaseAnimatronic anim in animatronics) {
             if (anim != null) {
                 anim.IncreaseDifficulty(difficultyIncrease);
