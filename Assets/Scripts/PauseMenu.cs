@@ -12,10 +12,6 @@ public class PauseMenu : MonoBehaviour {
     }
 
     public void SetPause(bool returnWithClick) {
-        if (isPause) {
-            Continue();
-            return;
-        }
         this.returnWithClick = returnWithClick;
 
         isPause = true;

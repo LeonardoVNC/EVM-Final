@@ -119,7 +119,6 @@ public class GameManager : MonoBehaviour {
     }
 
     // Pausa
-    
     public void OnPause() {
         if (isAlive) pauseMenu.SetPause(returnWithClick);
     }
