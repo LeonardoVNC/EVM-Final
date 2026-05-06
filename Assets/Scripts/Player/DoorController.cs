@@ -4,14 +4,16 @@ public class DoorController : MonoBehaviour
 {
     public GameObject door;
     public bool isLeftDoor = true;
-    public bool startClosed = false; 
-
+    public bool startClosed = false;
     public bool isDoorClosed = false;
+
+    private UnityEngine.AI.NavMeshObstacle obstacle;
 
     void Start()
     {
         isDoorClosed = startClosed;
         door.SetActive(isDoorClosed);
+        obstacle = door.GetComponent<UnityEngine.AI.NavMeshObstacle>();
     }
 
     public void ToggleDoor()
