@@ -45,6 +45,7 @@ public class GameTimeManager : MonoBehaviour {
     private void CheckAnimatronics(int newHour) {
         if (newHour == 1) {
             animatronics[0].Activate();
+            animatronics[1].Activate();
         }
         foreach (BaseAnimatronic anim in animatronics) {
             if (anim != null) {
