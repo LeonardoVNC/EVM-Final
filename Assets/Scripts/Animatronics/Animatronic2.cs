@@ -42,6 +42,7 @@ public class Animatronic2 : BaseAnimatronic {
     }
 
     IEnumerator AttackSequence() {
+        GameManager.Instance.StopCall();
         waitingAtDoor = false; 
         if (jumpscareImage != null) jumpscareImage.gameObject.SetActive(true);
         if (jumpscareVideo != null) {

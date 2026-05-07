@@ -47,7 +47,7 @@ public class GameTimeManager : MonoBehaviour
         UIManager.Instance.UpdateTimeText(GetFormattedTime());
     }
 
-    void OnHourPassed(int newHour)
+    void OnHourPassed(int newHour) 
     {
         lastHourTracked = newHour;
         CheckAnimatronics(newHour);

@@ -244,6 +244,7 @@ void TeleportToPlayer()
     IEnumerator AttackSequence()
     {
         if (isAttacking) yield break;
+        GameManager.Instance.StopCall();
         isAttacking = true;
         state = A3State.Retreating;
 

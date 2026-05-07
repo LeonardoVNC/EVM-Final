@@ -17,10 +17,12 @@ public class GameManager : MonoBehaviour {
     private bool isAlive = true;
 
     public AudioClip powerout;
-    public AudioSource poweroutBGPlayer;
+    public AudioSource callAudioSource;
     public DoorController doorLeft;
     public DoorController doorRight;
     public PauseMenu pauseMenu;
+    public AudioClip[] calls;
+    private bool[] callTriggered = new bool[4];
 
     void Awake() {
         if (Instance == null) {
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour {
             baseDrain = 0.1f;
             unitDrain = 0.24f;
         }
+        PlayCall(0);
     }
 
     void Update() {
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour {
             CalculateBattery();
             UpdateAtmosphere();
             SyncUI();
+            CheckCallTriggers();
         }
     }
 
@@ -76,7 +80,6 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        UIManager.Instance.ShowBlackoutMessages();
         isPoweroutActive = true;
         batteryLevel = 25f;
         InputManager.Instance.cameraManager.ForceCloseMonitor();
@@ -89,7 +92,27 @@ public class GameManager : MonoBehaviour {
         InputManager.Instance.SetState(new BlackoutState(InputManager.Instance));
         UIManager.Instance.DisableAllUI();
         GlobalAudioManager.Instance.PlayGlobalSound(powerout);
-        poweroutBGPlayer.Play();
+        PlayCall(3);
+    }
+
+    // Llamadas
+    void CheckCallTriggers() {
+        if (batteryLevel <= 60f && !callTriggered[1]) PlayCall(1);
+        if (batteryLevel <= 20f && !callTriggered[2]) PlayCall(2);
+    }
+
+    void PlayCall(int index) {
+        if (calls == null || index >= calls.Length || calls[index] == null) return;
+    
+        callTriggered[index] = true;
+        callAudioSource.clip = calls[index];
+        callAudioSource.Play();
+    }
+
+    public void StopCall() {
+        if (callAudioSource != null && callAudioSource.isPlaying) {
+            callAudioSource.Stop();
+        }
     }
 
     // Control de la UI
@@ -126,11 +149,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GoToWinScreen() {
+        StopCall();
         Instance = null;
         SceneManager.LoadScene("WinScreen");
     }
 
     public void GoToGameOverScreen() {
+        StopCall();
         Instance = null;
         SceneManager.LoadScene("GameOverScreen");
     }
