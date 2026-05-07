@@ -175,14 +175,16 @@ public class GameManager : MonoBehaviour {
     IEnumerator StartIntroSequence() {
         if (introCameraObj != null) introCameraObj.SetActive(true);
         if (playerObj != null) playerObj.SetActive(false);
-        InputManager.Instance.SetBlockInput(true);
+        InputManager.Instance.SetIntroMode(true);
+        FogManager.Instance.ChangeState(FogManager.FogState.Intro);
 
         yield return new WaitForSeconds(introDuration);
 
         if (introCameraObj != null) introCameraObj.SetActive(false);
         if (playerObj != null) playerObj.SetActive(true);
     
-        InputManager.Instance.SetBlockInput(false);
+        InputManager.Instance.SetIntroMode(false); 
+        FogManager.Instance.ChangeState(FogManager.FogState.Default);
     
         PlayCall(0); 
     }

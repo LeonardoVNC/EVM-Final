@@ -3,7 +3,7 @@ using UnityEngine;
 public class FogManager : MonoBehaviour {
     public static FogManager Instance { get; private set; }
 
-    public enum FogState { Default, Flashlight, Camera, PowerOut }
+    public enum FogState { Intro, Default, Flashlight, Camera, PowerOut }
     private FogState currentState = FogState.Default;
 
     private float defaultDensity = 0.088f;
@@ -39,6 +39,9 @@ public class FogManager : MonoBehaviour {
                 break;
             case FogState.PowerOut:
                 targetDensity = powerOutDensity;
+                break;
+            case FogState.Intro:
+                targetDensity = 0.01f;
                 break;
         }
     }

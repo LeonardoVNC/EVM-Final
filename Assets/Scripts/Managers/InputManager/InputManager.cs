@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour, IInputState {
     public Flashlight flashlight;
     private DoorButton currentButton = null;
     private bool blockInput = false;
+    private bool isIntroRunning = false;
 
     void Awake() {
         if (Instance == null) Instance = this;
@@ -42,5 +43,12 @@ public class InputManager : MonoBehaviour, IInputState {
 
     public DoorButton GetCurrentButton() => currentButton;
     public void SetCurrentButton(DoorButton newButton) => currentButton=newButton;
-    public void SetBlockInput(bool block) => blockInput=block;
+    public void SetBlockInput(bool block) {
+        if (!block && isIntroRunning) return; 
+        blockInput = block;
+    }
+    public void SetIntroMode(bool active) {
+        isIntroRunning = active;
+        SetBlockInput(active);
+    }
 }
