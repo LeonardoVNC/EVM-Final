@@ -6,6 +6,7 @@ public class PauseMenu : MonoBehaviour {
     private bool isClicked = false;
     private bool returnWithClick = false;
     public AudioClip clickClip;
+    public CallsManager callManager;
 
     void Awake() {
         this.gameObject.SetActive(false);
@@ -20,9 +21,7 @@ public class PauseMenu : MonoBehaviour {
         Cursor.visible = true;
         isClicked = false;
 
-        if (GameManager.Instance.callAudioSource.isPlaying) {
-            GameManager.Instance.callAudioSource.Pause();
-        }
+        callManager.PauseCall();
 
         InputManager.Instance.SetBlockInput(true);
         Time.timeScale = 0f;
@@ -39,12 +38,10 @@ public class PauseMenu : MonoBehaviour {
             Cursor.visible = true;
         } else {
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;;
+            Cursor.visible = false;
         }
 
-        if (GameManager.Instance.callAudioSource.clip != null) {
-            GameManager.Instance.callAudioSource.UnPause();
-        }
+        callManager.UnPauseCall();
 
         InputManager.Instance.SetBlockInput(false);
         Time.timeScale = 1f;

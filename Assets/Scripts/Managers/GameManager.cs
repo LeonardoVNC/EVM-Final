@@ -16,15 +16,15 @@ public class GameManager : MonoBehaviour {
     private bool isPoweroutActive = false;
     private bool hasPower = true;
     private bool isAlive = true;
-    private bool[] callTriggered = new bool[4];
     private float introDuration = 5f;
+    private bool[] batteryCallsTriggered = new bool[2];
 
     public AudioClip powerout;
-    public AudioSource callAudioSource;
+    public AudioSource poweroutBG;
     public DoorController doorLeft;
     public DoorController doorRight;
     public PauseMenu pauseMenu;
-    public AudioClip[] calls;
+    public CallsManager callManager;
     public GameObject introCameraObj;
     public GameObject playerObj;
 
@@ -58,7 +58,6 @@ public class GameManager : MonoBehaviour {
             CalculateBattery();
             UpdateAtmosphere();
             SyncUI();
-            CheckCallTriggers();
         }
     }
 
@@ -74,6 +73,14 @@ public class GameManager : MonoBehaviour {
         if (batteryLevel <= 0) {
             batteryLevel = 0;
             PowerOut();
+        }
+        if (!batteryCallsTriggered[0] && batteryLevel <= 60f) {
+            callManager.PlayCall(1);
+            batteryCallsTriggered[0] = true;
+        } 
+        if (!batteryCallsTriggered[1] && batteryLevel <= 20f) {
+            callManager.PlayCall(2);
+            batteryCallsTriggered[0] = false;
         }
     }
     
@@ -96,27 +103,8 @@ public class GameManager : MonoBehaviour {
         InputManager.Instance.SetState(new BlackoutState(InputManager.Instance));
         UIManager.Instance.DisableAllUI();
         GlobalAudioManager.Instance.PlayGlobalSound(powerout);
-        PlayCall(3);
-    }
-
-    // Llamadas
-    void CheckCallTriggers() {
-        if (batteryLevel <= 60f && !callTriggered[1]) PlayCall(1);
-        if (batteryLevel <= 20f && !callTriggered[2]) PlayCall(2);
-    }
-
-    void PlayCall(int index) {
-        if (calls == null || index >= calls.Length || calls[index] == null) return;
-    
-        callTriggered[index] = true;
-        callAudioSource.clip = calls[index];
-        callAudioSource.Play();
-    }
-
-    public void StopCall() {
-        if (callAudioSource != null && callAudioSource.isPlaying) {
-            callAudioSource.Stop();
-        }
+        callManager.PlayCall(3);
+        poweroutBG.Play();
     }
 
     // Control de la UI
@@ -153,13 +141,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GoToWinScreen() {
-        StopCall();
+        callManager.StopCall();
         Instance = null;
         SceneManager.LoadScene("WinScreen");
     }
 
     public void GoToGameOverScreen() {
-        StopCall();
+        callManager.StopCall();
         Instance = null;
         SceneManager.LoadScene("GameOverScreen");
     }
@@ -186,7 +174,7 @@ public class GameManager : MonoBehaviour {
         InputManager.Instance.SetIntroMode(false); 
         FogManager.Instance.ChangeState(FogManager.FogState.Default);
     
-        PlayCall(0); 
+        callManager.PlayCall(0); 
     }
 
     // Getters
@@ -197,4 +185,6 @@ public class GameManager : MonoBehaviour {
     public void ToogleDoor1(bool closed) => isDoor1Closed = closed;
     public void ToogleDoor2(bool closed) => isDoor2Closed = closed;
     public void SetAlive(bool alive) => isAlive = alive;
+
+    public void StopCall() => callManager.StopCall();
 }
