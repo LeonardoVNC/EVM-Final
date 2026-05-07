@@ -271,9 +271,9 @@ RectTransform:
   - {fileID: 1863402023}
   m_Father: {fileID: 70605357}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 455, y: -65}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -196}
   m_SizeDelta: {x: 300, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &753231308
@@ -420,14 +420,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.26981127, b: 0.26981127, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 4d3dff67e2e9f914ca025ef4bc8a186c, type: 3}
+  m_Texture: {fileID: 2800000, guid: 9aa2fc7f6adc37b4ca0c09e03e668d41, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -469,14 +469,14 @@ RectTransform:
   m_GameObject: {fileID: 1822969588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.2, y: 2.2, z: 2.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 70605357}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 471, y: -152}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -490}
   m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1822969590
@@ -499,18 +499,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Five
-
-    Nights
-
-    At
-
-    Placeholder
-
-    (now its a Game Over screen)'
+  m_text: Game Over
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c639b27b484e1ec489abbc88fd455fc3, type: 2}
-  m_sharedMaterial: {fileID: -2085328903778297716, guid: c639b27b484e1ec489abbc88fd455fc3, type: 2}
+  m_sharedMaterial: {fileID: -1762529284313293237, guid: c639b27b484e1ec489abbc88fd455fc3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -541,8 +533,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -863,7 +855,7 @@ MonoBehaviour:
   m_text: '> Reintentar'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c639b27b484e1ec489abbc88fd455fc3, type: 2}
-  m_sharedMaterial: {fileID: -2085328903778297716, guid: c639b27b484e1ec489abbc88fd455fc3, type: 2}
+  m_sharedMaterial: {fileID: -1762529284313293237, guid: c639b27b484e1ec489abbc88fd455fc3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
