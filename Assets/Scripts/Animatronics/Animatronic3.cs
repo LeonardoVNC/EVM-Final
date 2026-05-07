@@ -17,6 +17,9 @@ public class Animatronic3 : BaseAnimatronic
     public VideoPlayer jumpscareVideo;
     public RawImage jumpscareImage;
 
+    public AudioClip ghost_scape;
+    public AudioClip ghost_retreat;
+
     private enum A3State { Inactive, Visible, Retreating }
     private A3State state = A3State.Inactive;
 
@@ -95,31 +98,32 @@ public class Animatronic3 : BaseAnimatronic
         TeleportToPlayer();
     }
 
-    void TeleportToPlayer()
+void TeleportToPlayer()
+{
+    Vector3 targetPos = appearPoint != null
+        ? realAppearPos
+        : playerTransform.position + playerTransform.forward * 1.5f;
+
+    transform.position = targetPos;
+
+    if (playerTransform != null)
     {
-        Vector3 targetPos = appearPoint != null
-            ? realAppearPos
-            : playerTransform.position + playerTransform.forward * 1.5f;
-
-        transform.position = targetPos;
-
-        if (playerTransform != null)
-        {
-            Vector3 dir = playerTransform.position - transform.position;
-            dir.y = 0f;
-            if (dir != Vector3.zero)
-                transform.rotation = Quaternion.LookRotation(dir);
-        }
-
-        gameObject.SetActive(true);
-        state = A3State.Visible;
-        flashlightHoldTimer = 0f;
-        attackCountdownA3 = attackWindow;
-        isAttacking = false;
-        isBeingFlashed = false;
-
-        if (animator != null) animator.SetBool("isLooking", false);
+        Vector3 dir = playerTransform.position - transform.position;
+        dir.y = 0f;
+        if (dir != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(dir);
     }
+
+    gameObject.SetActive(true);
+    state = A3State.Visible;
+    flashlightHoldTimer = 0f;
+    attackCountdownA3 = attackWindow;
+    isAttacking = false;
+    isBeingFlashed = false;
+
+    if (ghost_scape != null) GlobalAudioManager.Instance.PlayGlobalSound(ghost_scape);
+    if (animator != null) animator.SetBool("isLooking", false);
+}
 
     bool TrackFlashlight()
     {
@@ -176,6 +180,7 @@ public class Animatronic3 : BaseAnimatronic
         if (animator != null) animator.SetBool("isLooking", false);
         if (agent != null) agent.enabled = false;
         transform.position = realSpawnPos;
+        if (ghost_retreat != null) GlobalAudioManager.Instance.PlayGlobalSound(ghost_retreat);
         StartCoroutine(AppearAfterDelay(reappearDelay));
     }
 
@@ -224,6 +229,7 @@ public class Animatronic3 : BaseAnimatronic
                 Debug.Log($"[A3] blackoutSpawn en NavMesh: {onMesh} — pos:{blackoutSpawnPoint.position}");
 
                 agent.Warp(blackoutSpawnPoint.position);
+                if (ghost_scape != null) GlobalAudioManager.Instance.PlayGlobalSound(ghost_scape);
             }
 
             if (animator != null) animator.SetBool("isLooking", true);
