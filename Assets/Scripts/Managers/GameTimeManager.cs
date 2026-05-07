@@ -17,6 +17,14 @@ public class GameTimeManager : MonoBehaviour {
     void Start() {
         int difficulty = MainMenu.difficulty;
         realSecondsPerGameHour = 40f + (10f*difficulty);
+        foreach (BaseAnimatronic anim in animatronics) {
+            if (anim != null) {
+                //TODO cambiar a Setter cuando 
+                anim.SetAILevel(2 + difficulty*2);
+                anim.SetMovementInterval(15f - (difficulty*2));
+                anim.SetAttackTimer(6f - difficulty);
+            }
+        }
     }
 
     void Update() {

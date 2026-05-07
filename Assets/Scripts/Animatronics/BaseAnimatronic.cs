@@ -6,12 +6,13 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     public AIState currentAIState = AIState.Default;
 
     public Transform[] waypoints;
-    public int aiLevel = 1; //1-20
     public float moveSpeed = 6f;
-    public float attackTimer = 3f;
-    public float movementInterval = 5f;
     public float detectionRange = 10f;
     public float chaseSpeed = 4f;
+
+    protected int aiLevel = 1; //1-20
+    protected float movementInterval = 5f;
+    protected float attackTimer = 3f;
 
     protected NavMeshAgent agent;
     protected Animator animator;
@@ -118,4 +119,8 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     public void IncreaseDifficulty(int amount) {
         aiLevel = Mathf.Clamp(aiLevel + amount, 0, 20);
     }
+
+    public void SetAILevel(int level) => aiLevel = level;
+    public void SetMovementInterval(float interval) => movementInterval = interval;
+    public void SetAttackTimer(float time) => attackTimer = time;
 }
