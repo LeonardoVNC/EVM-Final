@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
     private bool isAlive = true;
 
     public AudioClip powerout;
+    public AudioSource poweroutBGPlayer;
     public DoorController doorLeft;
     public DoorController doorRight;
     public PauseMenu pauseMenu;
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour {
         InputManager.Instance.SetState(new BlackoutState(InputManager.Instance));
         UIManager.Instance.DisableAllUI();
         GlobalAudioManager.Instance.PlayGlobalSound(powerout);
+        poweroutBGPlayer.Play();
     }
 
     // Control de la UI
