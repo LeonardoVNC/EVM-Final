@@ -8,7 +8,7 @@ public class Flashlight : MonoBehaviour {
     private float tickerSpeed = 0.07f;
 
     public AudioClip flickerSound;
-
+    public bool IsOn => isOn;
     void Awake() {
         lightComponent = GetComponent<Light>();
         lightComponent.enabled = false;

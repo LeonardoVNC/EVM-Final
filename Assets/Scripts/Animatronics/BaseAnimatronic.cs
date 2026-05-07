@@ -123,4 +123,8 @@ public abstract class BaseAnimatronic : MonoBehaviour {
     public void SetAILevel(int level) => aiLevel = level;
     public void SetMovementInterval(float interval) => movementInterval = interval;
     public void SetAttackTimer(float time) => attackTimer = time;
+    public void SetReappearDelay(float delay) => OnSetReappearDelay(delay);
+    public void SetFlashlightHoldRequired(float time) => OnSetFlashlightHoldRequired(time);
+    protected virtual void OnSetReappearDelay(float delay) { }
+    protected virtual void OnSetFlashlightHoldRequired(float time) { }
 }
