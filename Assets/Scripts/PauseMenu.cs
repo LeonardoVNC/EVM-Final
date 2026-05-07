@@ -50,6 +50,7 @@ public class PauseMenu : MonoBehaviour {
 
         isClicked = true;
         GlobalAudioManager.Instance.PlayGlobalSound(clickClip);
+        Time.timeScale = 1f; 
         SceneManager.LoadScene("MainMenu");
     }
 }
