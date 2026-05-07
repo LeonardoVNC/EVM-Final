@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour {
     private bool isPoweroutActive = false;
     private bool hasPower = true;
     private bool isAlive = true;
+    private bool[] callTriggered = new bool[4];
+    private float introDuration = 5f;
 
     public AudioClip powerout;
     public AudioSource callAudioSource;
@@ -22,7 +25,8 @@ public class GameManager : MonoBehaviour {
     public DoorController doorRight;
     public PauseMenu pauseMenu;
     public AudioClip[] calls;
-    private bool[] callTriggered = new bool[4];
+    public GameObject introCameraObj;
+    public GameObject playerObj;
 
     void Awake() {
         if (Instance == null) {
@@ -46,7 +50,7 @@ public class GameManager : MonoBehaviour {
             baseDrain = 0.1f;
             unitDrain = 0.24f;
         }
-        PlayCall(0);
+        StartCoroutine(StartIntroSequence());
     }
 
     void Update() {
@@ -166,6 +170,22 @@ public class GameManager : MonoBehaviour {
     }
 
     private bool returnWithClick => isSecPanelOn;
+
+    // Introduccion
+    IEnumerator StartIntroSequence() {
+        if (introCameraObj != null) introCameraObj.SetActive(true);
+        if (playerObj != null) playerObj.SetActive(false);
+        InputManager.Instance.SetBlockInput(true);
+
+        yield return new WaitForSeconds(introDuration);
+
+        if (introCameraObj != null) introCameraObj.SetActive(false);
+        if (playerObj != null) playerObj.SetActive(true);
+    
+        InputManager.Instance.SetBlockInput(false);
+    
+        PlayCall(0); 
+    }
 
     // Getters
     public float BatteryLevel => batteryLevel;
