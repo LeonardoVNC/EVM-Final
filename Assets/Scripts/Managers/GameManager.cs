@@ -30,6 +30,21 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    void Start() {
+        int difficulty = MainMenu.difficulty;
+
+        if (difficulty == 1) {
+            baseDrain = 0.06f;
+            unitDrain = 0.12f;
+        }else if (difficulty == 2) {
+            baseDrain = 0.08f;
+            unitDrain = 0.18f;
+        }else if (difficulty == 3) {
+            baseDrain = 0.1f;
+            unitDrain = 0.24f;
+        }
+    }
+
     void Update() {
         if (hasPower) {
             CalculateBattery();

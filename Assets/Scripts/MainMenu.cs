@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
     private bool isStarting = false;
-    private static int difficulty = 1;
+    public static int difficulty = 1;
 
     public AudioClip clickClip;
     public GameObject firstScreen;
