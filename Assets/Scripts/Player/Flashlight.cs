@@ -15,7 +15,7 @@ public class Flashlight : MonoBehaviour {
     }
 
     void Update() {
-        if (GameManager.Instance.IsPoweroutActive && isOn) {
+        if (GameManager.Instance != null && GameManager.Instance.IsPoweroutActive && isOn) {
             HandleTicker();
         }
     }
