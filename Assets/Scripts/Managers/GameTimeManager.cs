@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class GameTimeManager : MonoBehaviour {
-    public float realSecondsPerGameHour = 90f;
+    private float realSecondsPerGameHour = 60f;
     private float currentHour = 0f;
     private int lastHourTracked = 0;
     private bool timeStopped = false;
@@ -13,6 +13,11 @@ public class GameTimeManager : MonoBehaviour {
     public AudioClip clockWinClip;
 
     public float CurrentHour => currentHour;
+
+    void Start() {
+        int difficulty = MainMenu.difficulty;
+        realSecondsPerGameHour = 40f + (10f*difficulty);
+    }
 
     void Update() {
         if (timeStopped || !GameManager.Instance.HasPower) return;
