@@ -6,10 +6,10 @@
 
 ##  Descripción
 
-**Postgrado Night** es un juego de survival horror inspirado en *Five Nights at Freddy's*. El jugador asume el rol de un becario universitario  que debe sobrevivir una noche completa (12:00 AM → 6:00 AM) gestionando recursos limitados, vigilando cámaras de seguridad y reaccionando a la amenaza de 4 animatrónicos autónomos con comportamientos únicos.
+**Postgrado Night** es un juego de survival horror inspirado en *Five Nights at Freddy's*. El jugador asume el rol de un becario universitario  que debe sobrevivir una noche completa (12:00 AM → 6:00 AM) gestionando recursos limitados, vigilando cámaras de seguridad y reaccionando a la amenaza de 3 animatrónicos autónomos con comportamientos únicos.
 
 - **Condición de victoria:** el reloj llega a las 6:00 AM con el jugador vivo.
-- **Condición de derrota:** batería al 0% **o** un animatrónico logra entrar al cuarto del guardia.
+- **Condición de derrota:** un animatrónico logra entrar al cuarto del guardia.
 
 ---
 
@@ -24,10 +24,12 @@
 | `E` | Cerrar la puerta cuando miras el boton rojo de la puerta | Consume batería por puerta cerrada |
 | Mouse | Mirar alrededor en el cuarto | Ángulo limitado, vista en primera persona |
 | Click izquierdo | seleccionar la camara para ver el cuarto | cuando estas en la vista de camara |
+|`P`| Menu de pausa| Se puede abrir una vez iniciado el juego|
+|`W``A``S``D`| Movimiento | Solo en modo apagón|
 
 ### Sistema de Batería
 
-La batería es el recurso central del juego. Llegar a 0% significa muerte inmediata.
+La batería es el recurso central del juego. Llegar a 0% inicia el modo Apagón, en el que debes esconderte de los animatrónicos hasta que lleguen las 6AM, no dejes que te encuentren.
 
 | Acción | Consumo |
 |---|---|
@@ -38,41 +40,19 @@ La batería es el recurso central del juego. Llegar a 0% significa muerte inmedi
 
 
 
-### Los 4 Animatrónicos
+### Los 3 Animatrónicos
 
 | Animatrónico | Activación | Comportamiento | Cómo detenerlo |
 |---|---|---|---|
-| **A1 — El Rondador** | 1:00 AM | Recorre pasillos del piso 1 en ruta fija. Emite sonido de pasos. | Cerrar la puerta antes de que llegue. |
-
-*Falta implementar*
-
-| Animatrónico | Activación | Comportamiento | Cómo detenerlo |
-|---|---|---|---|
+| **A1 — El Rondador** | 1:00 AM | Recorre pasillos del piso 1 en ruta fija. | Cerrar la puerta antes de que llegue. |
 | **A2 — El Agresivo** | 2:00 AM | Más rápido que A1. Toma ruta por cafetería/garaje. | Cerrar la puerta del lado contrario a A1. |
-| **A3 — El Espectro** | 3:00 AM | Se teletransporta al cuarto y se oculta en una esquina (~cada 90s). | Alumbrar con linterna en menos de 3 segundos. |
-| **A4 — El Controlado** | 4:00 AM+ | Ataca si el jugador suelta el botón de control por más de 2 segundos. | Mantener presionado el botón en pantalla. |
+| **A3 — El Espectro** | 3:00 AM | Se teletransporta al cuarto y se oculta en tu espalda (~cada 20s). | Alumbrar con linterna en menos de 3 segundos. |
 
 ### Sistema de Cámaras
 
-El jugador dispone de hasta 10 cámaras de seguridad distribuidas en ambos pisos del edificio. Mantener el panel activo consume batería de forma continua.
+El jugador dispone de múltiples cámaras de seguridad distribuidas en ambos pisos del edificio. Mantener el panel activo consume batería de forma continua, pero ayuda a identificar correctamente donde se encuentra cada animatrónico, en tanto no se escondan de ti.
 
-| Cámara | Ubicación | Importancia |
-|---|---|---|
-| CAM 01 | Cafetería — Piso 1 | Zona de inicio de A2 |
-| CAM 02 | Auditorio — Piso 1 | Zona de inicio de A1 |
-| CAM 03 | Baños — Piso 1 | Punto de paso de A1 |
-| CAM 04 | Pasillo — Piso 1 | Ruta principal de ambos |
-
-*Falta implementar*
-
-| Cámara | Ubicación | Importancia |
-|---|---|---|
-| CAM 05 | Garaje (exterior) | Entrada alternativa de A2 |
-| CAM 06 | Salida Universidad | Control de perímetro |
-| CAM 07 | Gradas/Escaleras | Detectar si sube al piso 2 |
-| CAM 08 | Pasillo — Piso 2 | Movimiento en piso 2 |
-| CAM 09 | Aula 1 — Piso 2 | Zona de spawn de A3 |
-| CAM 10 | Aula 2 — Piso 2 | Zona secundaria |
+Implementan un script de paneo lateral y de efecto de estática para darle mayor inmersión al juego.
 
 ---
 
@@ -88,7 +68,7 @@ El jugador dispone de hasta 10 cámaras de seguridad distribuidas en ambos pisos
 | **Unity Animator Controller** | Gestión de animaciones y transiciones de los animatrónicos |
 ---
 
-## Jerarquía de la Escena
+## Jerarquía (básica) de la Escena
 
 ```
 Night1
@@ -139,6 +119,17 @@ El `GlobalAudioManager` está implementado como **Singleton** en la escena del M
 ```csharp
 // Ejemplo de uso del patrón Singleton
 GlobalAudioManager.Instance.Play(clip);
+```
+
+### State - `InputManager`
+
+El `InputManager` emplea la versión más pura del patrón de diseño State, facilitando la conexión entre los distintos modos de juego y sus inputs, ya que separa y diferencia como se procesa cada input según el estado en el que se encuentre, mejorando la escalabilidad y facilitando la implementación de nuevos modos de juego.
+
+```
+Estados de InputManager:
+  ├── Estado: Office      → Interacción con botones, raycast, movimiento de cámara, linterna y abre el panel de seguridad
+  ├── Estado: Monitor     → Permite mayor control del panel de seguridad y permite cerrarlo
+  └── Estado: Blackout    → Habilita el movimiento del jugador y de la cámara mientras bloquea el panel de seguridad
 ```
 
 ### State Machine — `FogManager`
