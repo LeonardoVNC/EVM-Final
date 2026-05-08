@@ -81,7 +81,7 @@ public abstract class BaseAnimatronic : MonoBehaviour {
             Vector3 direction = playerTransform.position - transform.position;
             direction.y = 0f;
             if (direction != Vector3.zero)
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-direction), Time.deltaTime * 5f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * 5f);
         }
     }
 
